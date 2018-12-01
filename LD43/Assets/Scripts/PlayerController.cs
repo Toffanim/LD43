@@ -27,6 +27,14 @@ public class PlayerController : MonoBehaviour
         Inputs.X = Input.GetAxis("Horizontal") >= 0 ? (float)Math.Ceiling(Input.GetAxis("Horizontal")) : (float)Math.Floor(Input.GetAxis("Horizontal"));
         Inputs.Y = Input.GetButtonDown("Jump") ? 1 : 0;//(float)Math.Ceiling((double)Input.GetAxis("Vertical"));
         State.State = Input.GetButtonDown("Jump") ? global::State.JUMP : State.State;
+
+        Animator Animator = GetComponent<Animator>();
+        if (Input.GetButtonDown("Attack"))
+        {
+            Animator.SetBool(Animator.StringToHash("IsAttacking"), true);
+        }
+        else { Animator.SetBool(Animator.StringToHash("IsAttacking"), false); 
+        }
     }
 
     // Update is called once per frame
