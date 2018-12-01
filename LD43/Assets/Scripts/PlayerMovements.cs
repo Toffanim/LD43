@@ -104,6 +104,12 @@ public class PlayerMovements : MonoBehaviour
             RB2D.AddForce(new Vector2(((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * (IsGrounded() ? State.accel : State.airAccel),
                                         0));
 
+        RB2D.AddForce(new Vector2(((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * (IsGrounded() ? State.accel : State.airAccel),
+                                    0));
+        Debug.Log(RB2D.velocity.x);
+    
+        RB2D.velocity = new Vector2((Controller.Inputs.X == 0 && IsGrounded()) ? 0 : RB2D.velocity.x,
+                                    (Controller.Inputs.Y == 1 && (IsTouchingSomething() || CanDoubleJump)) ? State.jump : RB2D.velocity.y);
             RB2D.velocity = new Vector2((Controller.Inputs.X == 0 && IsGrounded()) ? 0 : RB2D.velocity.x,
                                         (Controller.Inputs.Y == 1 && (IsTouchingSomething() || CanDoubleJump)) ? State.jump : RB2D.velocity.y);
 
@@ -111,7 +117,10 @@ public class PlayerMovements : MonoBehaviour
 
             if (IsOnWall() && !IsGrounded() && Controller.Inputs.Y == 1)
                 RB2D.velocity = new Vector2(-wallDirection() * State.Speed * 0.75f, RB2D.velocity.y);
+        Debug.Log(Controller.Inputs.X);
+        Debug.Log(RB2D.velocity.x);
 
+        Controller.Inputs.Y = 0;
             Controller.Inputs.Y = 0;
         }
         else if (State.MoveSet == 2)
