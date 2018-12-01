@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: test_tilemap_0
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: ecaf772e491e294438549c4ed799ce21, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7dde134df89d96040ae063018da22ed2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1

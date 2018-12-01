@@ -13,14 +13,13 @@ public class PlayerState : MonoBehaviour {
 
     public State State;
 
-    public float Speed;
+    public float Speed = 10;
     public float accel = 6f;
-    public float airAccel = 3f;
-    public float jump = 14f;
+    public float airAccel = 0.1f;
+    public float jump = 0.1f;
     // Use this for initialization
     void Start () {
         State = State.IDLE;
-        Speed = 10;
 	}
 	
 	// Update is called once per frame

@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public struct MovementInputs {
     public float X;
-    public float y;
+    public float Y;
 }
 
 public class PlayerController : MonoBehaviour
@@ -28,8 +29,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-       Inputs.X = Input.GetAxis("Horizontal");
-       Inputs.y = Input.GetAxis("Vertical");
+       Inputs.X = Input.GetAxis("Horizontal") >= 0 ? (float) Math.Ceiling(Input.GetAxis("Horizontal")) : (float)Math.Floor(Input.GetAxis("Horizontal"));
+        Inputs.Y = Input.GetButtonDown("Jump") ? 1 : 0;//(float)Math.Ceiling((double)Input.GetAxis("Vertical"));
         State.State = Input.GetButtonDown("Jump") ? global::State.JUMP : State.State ;
     }
 }

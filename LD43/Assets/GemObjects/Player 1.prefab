@@ -64,7 +64,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &61049372962711672
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -124,10 +124,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   State: 0
-  Speed: 0
+  Speed: 6
   accel: 6
   airAccel: 3
-  jump: 14
+  jump: 4.5
 --- !u!212 &212410538549616020
 SpriteRenderer:
   m_ObjectHideFlags: 1
