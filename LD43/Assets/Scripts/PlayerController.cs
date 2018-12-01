@@ -32,6 +32,18 @@ public class PlayerController : MonoBehaviour
             npcInRange.dialog();
 
         Inputs.X = Input.GetAxis("Horizontal") >= 0 ? (float)Math.Ceiling(Input.GetAxis("Horizontal")) : (float)Math.Floor(Input.GetAxis("Horizontal"));
+        if(Inputs.X < 0)
+        {
+            SpriteRenderer SR = GetComponent<SpriteRenderer>();
+            SR.flipX = true;
+        }
+        else if (Inputs.X > 0)
+        {
+            {
+                SpriteRenderer SR = GetComponent<SpriteRenderer>();
+                SR.flipX = false;
+            }
+        }
         Inputs.Y = Input.GetButtonDown("Jump") ? 1 : 0;//(float)Math.Ceiling((double)Input.GetAxis("Vertical"));
         State.State = Input.GetButtonDown("Jump") ? global::State.JUMP : State.State;
 
