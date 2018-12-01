@@ -113,48 +113,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &206280181
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4772612158118214, guid: b53b512df544a3b4a9f066ebcb1d9e54, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4772612158118214, guid: b53b512df544a3b4a9f066ebcb1d9e54, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4772612158118214, guid: b53b512df544a3b4a9f066ebcb1d9e54, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4772612158118214, guid: b53b512df544a3b4a9f066ebcb1d9e54, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4772612158118214, guid: b53b512df544a3b4a9f066ebcb1d9e54, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4772612158118214, guid: b53b512df544a3b4a9f066ebcb1d9e54, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4772612158118214, guid: b53b512df544a3b4a9f066ebcb1d9e54, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4772612158118214, guid: b53b512df544a3b4a9f066ebcb1d9e54, type: 2}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: b53b512df544a3b4a9f066ebcb1d9e54, type: 2}
-  m_IsPrefabAsset: 0
 --- !u!1 &286240637
 GameObject:
   m_ObjectHideFlags: 0
@@ -37543,7 +37501,6 @@ TilemapCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-<<<<<<< HEAD
 --- !u!1001 &1215826691
 Prefab:
   m_ObjectHideFlags: 0
@@ -37591,8 +37548,6 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b53b512df544a3b4a9f066ebcb1d9e54, type: 2}
   m_IsPrefabAsset: 0
-=======
->>>>>>> a41f29aa0b3fde998bc246062bb6808b7cf401fc
 --- !u!1 &1393638974
 GameObject:
   m_ObjectHideFlags: 0
@@ -37632,5 +37587,5 @@ Transform:
   m_Children:
   - {fileID: 960535200}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
