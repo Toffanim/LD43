@@ -99,7 +99,7 @@ public class PlayerMovements : MonoBehaviour
     {
         if (IsGrounded())
             CanDoubleJump = true;
-        if (State.MoveSet == 1)
+        if (State.State == global::State.FULL_BODY)
         {
             RB2D.AddForce(new Vector2(((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * (IsGrounded() ? State.accel : State.airAccel),
                                         0));
@@ -114,7 +114,7 @@ public class PlayerMovements : MonoBehaviour
             //Debug.Log(RB2D.velocity.x);
             Controller.Inputs.Y = 0;
         }
-        else if (State.MoveSet == 2)
+        else if (State.State == global::State.ONE_LEG_TWO_ARMS)
         {
             RB2D.AddForce(new Vector2(((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * State.airAccel,
                             0));
@@ -124,7 +124,7 @@ public class PlayerMovements : MonoBehaviour
 
             Controller.Inputs.Y = 0;
         }
-        else if (State.MoveSet == 3)
+        else if (State.State == global::State.TWO_ARMS)
         {
             RB2D.AddForce(new Vector2(((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * (IsGrounded() ? State.accel*2 : State.airAccel),
                                         0));

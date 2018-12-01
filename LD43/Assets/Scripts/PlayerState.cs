@@ -4,9 +4,15 @@ using UnityEngine;
 
 public enum State
 {
-    IDLE,
-    WALK,
-    JUMP
+    FULL_BODY,
+    TWO_LEGS_ONE_ARM, // _o-|=
+    ONE_LEG_ONE_ARM,  // _o-|_
+    TWO_LEGS,         // o-|=
+    TWO_ARMS,         // =o-|
+    ONE_ARM,          // _o-|
+    ONE_LEG,          // o-=|_
+    ONE_LEG_TWO_ARMS, // =o-|_
+    NO_LIMBS          // o-|
 }
 
 public class PlayerState : MonoBehaviour {
@@ -19,10 +25,9 @@ public class PlayerState : MonoBehaviour {
     public float jump = 0.1f;
 
     public bool CanAttack = true;
-    public int MoveSet = 1;
     // Use this for initialization
     void Start () {
-        State = State.IDLE;
+        State = State.FULL_BODY;
 	}
 	
 	// Update is called once per frame
