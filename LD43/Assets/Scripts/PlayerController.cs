@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
     {
        Inputs.X = Input.GetAxis("Horizontal");
        Inputs.y = Input.GetAxis("Vertical");
-        State.State = Input.GetButtonDown("jump") ? global::State.JUMP : State.State ;
+        State.State = Input.GetButtonDown("Jump") ? global::State.JUMP : State.State ;
     }
 }
 
