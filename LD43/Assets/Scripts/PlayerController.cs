@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     public static KeyCode AccelarationKey = KeyCode.LeftShift;
 
     public MovementInputs Inputs;
+    public bool FrictionOnSides = false;
 
     //PV ATTR
     public NPC npcInRange { get; set; }
