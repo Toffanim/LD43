@@ -24,14 +24,15 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        Inputs.X = Input.GetAxis("Horizontal") >= 0 ? (float)Math.Ceiling(Input.GetAxis("Horizontal")) : (float)Math.Floor(Input.GetAxis("Horizontal"));
+        Inputs.Y = Input.GetButtonDown("Jump") ? 1 : 0;//(float)Math.Ceiling((double)Input.GetAxis("Vertical"));
+        State.State = Input.GetButtonDown("Jump") ? global::State.JUMP : State.State;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-       Inputs.X = Input.GetAxis("Horizontal") >= 0 ? (float) Math.Ceiling(Input.GetAxis("Horizontal")) : (float)Math.Floor(Input.GetAxis("Horizontal"));
-        Inputs.Y = Input.GetButtonDown("Jump") ? 1 : 0;//(float)Math.Ceiling((double)Input.GetAxis("Vertical"));
-        State.State = Input.GetButtonDown("Jump") ? global::State.JUMP : State.State ;
+
     }
 }
 

@@ -15,7 +15,7 @@ public class PlayerState : MonoBehaviour {
 
     public float Speed = 10;
     public float accel = 6f;
-    public float airAccel = 0.1f;
+    public float airAccel = 6f;
     public float jump = 0.1f;
     // Use this for initialization
     void Start () {
