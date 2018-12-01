@@ -99,7 +99,7 @@ public class PlayerMovements : MonoBehaviour
     {
         if (IsGrounded())
             CanDoubleJump = true;
-        if (State.State == global::State.FULL_BODY)
+        if ((State.State == global::State.FULL_BODY)||(State.State == global::State.TWO_LEGS_ONE_ARM))
         {
             RB2D.AddForce(new Vector2(((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * (IsGrounded() ? State.accel : State.airAccel),
                                         0));

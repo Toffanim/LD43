@@ -36,16 +36,16 @@ public class DialogBank {
     {
         DBlock retBlock = null;
         Dictionary<string, DBlock> dicoA = new Dictionary<string, DBlock>();
-        DBlock choiceA = new DBlock("You made the right decision my friend!", "OK, Let's do this !", DBlock.DBLOCK_EFFECTS.LOSE_LEG);
+        DBlock choiceA = new DBlock("You made the right decision my friend!", "OK, Let's do this !", DBlock.DBLOCK_EFFECTS.LOSE_ARM);
         DBlock choiceB = new DBlock("As you wish...", "No way I'm doing it.");
         dicoA.Add(choiceA.rootKey, choiceA);
         dicoA.Add(choiceB.rootKey, choiceB);
 
         Dictionary<string, DBlock> dicoB = new Dictionary<string, DBlock>();
-        dicoB.Add(MONO_DIALOG, new DBlock("I can help you pass this locked door but it will cost you an arm.", dicoA));
+        dicoB.Add(MONO_DIALOG, new DBlock("I can help you pass this weird door but it will cost you an arm.", dicoA));
 
         Dictionary<string, DBlock> dicoC = new Dictionary<string, DBlock>();
-        dicoC.Add(MONO_DIALOG, new DBlock("", dicoB));
+        dicoC.Add(MONO_DIALOG, new DBlock("Beautiful Princess, heh?", dicoB));
 
         retBlock = new DBlock("Good morning sir.", dicoC);
 

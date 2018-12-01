@@ -7,6 +7,8 @@ public class NPC : MonoBehaviour {
     // SETTABLE
     public int dialogID = 2;
     public bool resetDialog = true;
+    public GameObject guardedDoor;
+
     // INTERNAL
     public Dialog npcDialog { get; set; }
     bool inRangeOfPlayer;
@@ -82,7 +84,16 @@ public class NPC : MonoBehaviour {
         {
             PlayerState ps = capturedPlayerControlled.GetComponent<PlayerState>();
             if (!!ps)
-                ps.mutilate(npcDialog.getBlockEffect());
+            {
+                bool playerMutilated = ps.mutilate(npcDialog.getBlockEffect());
+                if (!!guardedDoor && !!playerMutilated)
+                {
+                    MagicDoorController mgc = guardedDoor.GetComponent<MagicDoorController>();
+                    if (!!mgc)
+                        mgc.open();
+
+                }
+            }
         }
 
     }//! dialog
