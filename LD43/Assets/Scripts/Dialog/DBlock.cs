@@ -2,31 +2,42 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DBlock : MonoBehaviour {
+public class DBlock {
 
     // ATTRS
-    public string                       message         { get; set; }
-    public Dictionary<string, DBlock>   responses       { get; set; }
-    public bool                         isFinalBlock    { get; set; }
+    public string message;
+    public Dictionary<string, DBlock> responses;
 
-    // Use this for initialization
-    void Start () {
+    public DBlock(string iMessage)
+    {
+        message = iMessage;
+    }
+    public bool isFinalBlock()
+    {
+        return ( (responses == null)||(responses.Count==0) );
+    }
 
-        if (responses!=null )
+    public DBlock(string iMessage, Dictionary<string, DBlock> iResponses)
+    {
+        message = iMessage;
+        responses = iResponses;
+        /*
+        if (iResponses != null)
         {
+            responses = iResponses;
             isFinalBlock = false;
             DBlock futureBlock = null;
             foreach (string k in responses.Keys)
             {
                 responses.TryGetValue(k, out futureBlock);
-                isFinalBlock |= (!!futureBlock);
+                isFinalBlock |= (futureBlock!=null);
                 futureBlock = null;
             }
         }
+        else
+        {
+            isFinalBlock = true;
+        }
+        */
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }
