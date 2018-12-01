@@ -45,9 +45,9 @@ public class DialogBank {
         dicoB.Add(MONO_DIALOG, new DBlock("I can help you pass this locked door but it will cost you an arm.", dicoA));
 
         Dictionary<string, DBlock> dicoC = new Dictionary<string, DBlock>();
-        dicoC.Add(MONO_DIALOG, new DBlock("Good morning sir. ", dicoB));
+        dicoC.Add(MONO_DIALOG, new DBlock("", dicoB));
 
-        retBlock = new DBlock("TEST ONLY", dicoC);
+        retBlock = new DBlock("Good morning sir.", dicoC);
 
         return retBlock;
 

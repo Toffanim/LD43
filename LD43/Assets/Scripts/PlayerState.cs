@@ -83,17 +83,17 @@ public class PlayerState : MonoBehaviour {
         State retval = State;
         if ((n_arms == 2) && (n_legs == 2))
             retval = State.FULL_BODY;
-        if ((n_arms == 2) && (n_legs == 1))
+        else if ((n_arms == 2) && (n_legs == 1))
             retval = State.ONE_LEG_TWO_ARMS;
-        if ((n_arms == 2) && (n_legs == 0))
+        else if ((n_arms == 2) && (n_legs == 0))
             retval = State.TWO_ARMS;
-        if ((n_arms == 1) && (n_legs == 2))
+        else if ((n_arms == 1) && (n_legs == 2))
             retval = State.TWO_LEGS_ONE_ARM;
-        if ((n_arms == 1) && (n_legs == 1))
+        else if ((n_arms == 1) && (n_legs == 1))
             retval = State.ONE_LEG_ONE_ARM;
-        if ((n_arms == 1) && (n_legs == 0))
+        else if ((n_arms == 1) && (n_legs == 0))
             retval = State.ONE_ARM;
-        if ((n_arms == 0) && (n_legs == 0))
+        else if ((n_arms == 0) && (n_legs == 0))
             retval = State.NO_LIMBS;
         else
             retval = State;
