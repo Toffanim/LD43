@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
         {
             SpriteRenderer SR = GetComponent<SpriteRenderer>();
             SR.flipX = true;
-            if (State.State == global::State.TWO_LEGS_ONE_ARM)
+            if (State.State == global::State.TWO_ARMS)
             {
                 State.CanAttack = false;
             }
