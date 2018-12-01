@@ -37594,6 +37594,8 @@ MonoBehaviour:
   accel: 6
   airAccel: 6
   jump: 6
+  CanAttack: 1
+  MoveSet: 1
 --- !u!114 &997347095
 MonoBehaviour:
   m_ObjectHideFlags: 0

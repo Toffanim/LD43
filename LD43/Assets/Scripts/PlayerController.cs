@@ -55,10 +55,6 @@ public class PlayerController : MonoBehaviour
                 State.CanAttack = false;
             }
         }
-        else if (State.MoveSet == 3)
-        {
-            State.CanAttack = true;
-        }
         Inputs.Y = Input.GetButtonDown("Jump") ? 1 : 0;//(float)Math.Ceiling((double)Input.GetAxis("Vertical"));
         State.State = Input.GetButtonDown("Jump") ? global::State.JUMP : State.State;
 
@@ -67,7 +63,8 @@ public class PlayerController : MonoBehaviour
         {
             Animator.SetBool(Animator.StringToHash("IsAttacking"), true);
         }
-        else { Animator.SetBool(Animator.StringToHash("IsAttacking"), false); 
+        else {
+            Animator.SetBool(Animator.StringToHash("IsAttacking"), false); 
         }
     }
 
