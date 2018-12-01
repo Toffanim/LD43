@@ -35,21 +35,6 @@ public class Dialog
             currentResponseIndex = 0;
     }
 
-    /*
-    public void fillResponses()
-    {
-        Dictionary<string, DBlock> dico = dialogChainCurrentElem.responses;
-        dico.
-        dialogResponses = new List<DBlock>(dico.Count);
-        if (dico != null)
-        {
-            foreach ( string key in dico.Keys)
-            {
-                dialogResponses.Add( new DBlock(key) ); // KNOWN LIMITATION : MAKES RESPONSE MONO CHOICE
-            }
-        }
-    }
-    */
     public void resetDialog()
     {
         dialogChainCurrentElem = dialogChainRoot;
@@ -74,6 +59,11 @@ public class Dialog
          dialogChainCurrentElem.responses.Values.ElementAt(currentResponseIndex).rootKey;
         Debug.Log("ID : " + currentResponseIndex + "  msg : " + s);
         return (s != null) ? s : "not found";
+    }
+
+    public DBlock.DBLOCK_EFFECTS getBlockEffect()
+    {
+        return dialogChainCurrentElem.blockEffect;
     }
 
     public Dictionary<string, DBlock> getChoices()

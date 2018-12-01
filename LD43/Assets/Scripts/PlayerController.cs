@@ -31,14 +31,10 @@ public class PlayerController : MonoBehaviour
     {
         if (npcInRange!=null)
         {
-            if ((Input.GetButtonDown("ChangeResponse")) && npcInRange.dialogStarted )
+            if ( Input.GetButtonDown("ChangeResponse")  && npcInRange.dialogStarted )
                 npcInRange.changeResponse();
             if (Input.GetButtonDown("Talk"))
                 npcInRange.dialog();
-
-            /*if (npcInRange.dialogStarted)
-                fillResponses();*/
-
         }
 
 

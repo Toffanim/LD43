@@ -13,6 +13,7 @@ public class NPC : MonoBehaviour {
     public bool dialogStarted = false;
 
     //PV ATTR
+    private PlayerController capturedPlayerControlled;
     private GameObject dialogUI;
     private UIDialogController uiDialogController;
 
@@ -63,17 +64,27 @@ public class NPC : MonoBehaviour {
                 bool tryDialog = npcDialog.tryPursueDialog();
                 if (!tryDialog)
                     exitDialog(); 
-                else
+                else // PURSUE DIALOG
                 {
                     string newMessage = npcDialog.getMessage();
                     if (newMessage != null)
                     {
                         uiDialogController.message = newMessage;
                     }
+                    
                 }
             }
         }
         uiDialogController.response = npcDialog.getResponseKey();
+
+        //RESOLVE EFFECT OF THE NEW MESSAGE
+        if (!!capturedPlayerControlled)
+        {
+            PlayerState ps = capturedPlayerControlled.GetComponent<PlayerState>();
+            if (!!ps)
+                ps.mutilate(npcDialog.getBlockEffect());
+        }
+
     }//! dialog
 
     public void changeResponse()
@@ -93,6 +104,7 @@ public class NPC : MonoBehaviour {
         dialogStarted = false;
         if (!!resetDialog)
             npcDialog.resetDialog();
+        
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -100,6 +112,7 @@ public class NPC : MonoBehaviour {
         PlayerController pc = other.GetComponent<PlayerController>();
         if (!!pc)
         {
+            capturedPlayerControlled = pc;
             inRangeOfPlayer = true;
             pc.npcInRange = this;
             Debug.Log("IN");
@@ -111,6 +124,7 @@ public class NPC : MonoBehaviour {
         PlayerController pc = other.GetComponent<PlayerController>();
         if (!!pc)
         {
+            capturedPlayerControlled = null;
             inRangeOfPlayer = false;
             pc.npcInRange = null;
             Debug.Log("OUT");

@@ -36,7 +36,7 @@ public class DialogBank {
     {
         DBlock retBlock = null;
         Dictionary<string, DBlock> dicoA = new Dictionary<string, DBlock>();
-        DBlock choiceA = new DBlock("You made the right decision my friend!", "OK, Let's do this !");
+        DBlock choiceA = new DBlock("You made the right decision my friend!", "OK, Let's do this !", DBlock.DBLOCK_EFFECTS.LOSE_ARM);
         DBlock choiceB = new DBlock("As you wish...", "No way I'm doing it.");
         dicoA.Add(choiceA.rootKey, choiceA);
         dicoA.Add(choiceB.rootKey, choiceB);

@@ -12,8 +12,10 @@ public enum State
     ONE_ARM,          // _o-|
     ONE_LEG,          // o-=|_
     ONE_LEG_TWO_ARMS, // =o-|_
-    NO_LIMBS          // o-|
+    NO_LIMBS,          // o-|
+    CHAIR_BALL       // CTHULHU
 }
+
 
 public class PlayerState : MonoBehaviour {
 
@@ -25,13 +27,65 @@ public class PlayerState : MonoBehaviour {
     public float jump = 0.1f;
 
     public bool CanAttack = true;
+
+    // PV STATS
+    private int n_arms = 2;
+    private int n_legs = 2;
+
+
     // Use this for initialization
     void Start () {
         State = State.FULL_BODY;
-	}
+        n_arms = 2;
+        n_legs = 2;
+    }
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
+    public void mutilate(DBlock.DBLOCK_EFFECTS iBlockEffect)
+    {
+        switch (iBlockEffect)
+        {
+            case DBlock.DBLOCK_EFFECTS.LOSE_ARM:
+                n_arms--;
+                State = processNewPlayerState();
+                Debug.Log("MUTILATE ARM");
+                break;
+            case DBlock.DBLOCK_EFFECTS.LOSE_LEG:
+                n_legs--;
+                State = processNewPlayerState();
+                Debug.Log("MUTILATE LEG");
+                break;
+            case DBlock.DBLOCK_EFFECTS.LOSE_BODY:
+                State = State.CHAIR_BALL;
+                break;
+            default:
+                break;
+        }
+    }
+
+    private State processNewPlayerState()
+    {
+        State retval = State;
+        if (n_arms == 2 && n_legs == 2)
+            retval = State.FULL_BODY;
+        if (n_arms == 2 && n_legs == 1)
+            retval = State.ONE_LEG_TWO_ARMS;
+        if (n_arms == 2 && n_legs == 0)
+            retval = State.TWO_ARMS;
+        if (n_arms == 1 && n_legs == 2)
+            retval = State.TWO_LEGS_ONE_ARM;
+        if (n_arms == 1 && n_legs == 1)
+            retval = State.ONE_LEG_ONE_ARM;
+        if (n_arms == 1 && n_legs == 0)
+            retval = State.ONE_ARM;
+        if (n_arms == 0 && n_legs == 0)
+            retval = State.NO_LIMBS;
+        else
+            retval = State;
+        return retval;
+    }
 }
