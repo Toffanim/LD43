@@ -17,6 +17,9 @@ public class PlayerState : MonoBehaviour {
     public float accel = 6f;
     public float airAccel = 6f;
     public float jump = 0.1f;
+
+    public bool CanAttack = true;
+    public int MoveSet = 1;
     // Use this for initialization
     void Start () {
         State = State.IDLE;

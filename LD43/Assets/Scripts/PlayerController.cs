@@ -25,10 +25,17 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         Inputs.X = Input.GetAxis("Horizontal") >= 0 ? (float)Math.Ceiling(Input.GetAxis("Horizontal")) : (float)Math.Floor(Input.GetAxis("Horizontal"));
-        if(Inputs.X < 0)
+
+        State.CanAttack = true;
+
+        if (Inputs.X < 0)
         {
             SpriteRenderer SR = GetComponent<SpriteRenderer>();
             SR.flipX = true;
+            if (State.MoveSet == 3)
+            {
+                State.CanAttack = false;
+            }
         }
         else if (Inputs.X > 0)
         {
@@ -36,12 +43,20 @@ public class PlayerController : MonoBehaviour
                 SpriteRenderer SR = GetComponent<SpriteRenderer>();
                 SR.flipX = false;
             }
+            if (State.MoveSet == 3)
+            {
+                State.CanAttack = false;
+            }
+        }
+        else if (State.MoveSet == 3)
+        {
+            State.CanAttack = true;
         }
         Inputs.Y = Input.GetButtonDown("Jump") ? 1 : 0;//(float)Math.Ceiling((double)Input.GetAxis("Vertical"));
         State.State = Input.GetButtonDown("Jump") ? global::State.JUMP : State.State;
 
         Animator Animator = GetComponent<Animator>();
-        if (Input.GetButtonDown("Attack"))
+        if (Input.GetButtonDown("Attack") && State.CanAttack)
         {
             Animator.SetBool(Animator.StringToHash("IsAttacking"), true);
         }
