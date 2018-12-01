@@ -27,12 +27,45 @@ public class PlayerController : MonoBehaviour
         npcInRange = null;
     }
 
+    private void ApplyAnimState()
+    {
+        Animator Animator = GetComponent<Animator>();
+
+        if(State.AnimState == AnimState.ATTACK) Animator.SetBool(Animator.StringToHash("IsAttacking"), true);
+        else Animator.SetBool(Animator.StringToHash("IsAttacking"), false);
+
+        if (State.AnimState == AnimState.JUMP)
+        {
+            Animator.SetBool(Animator.StringToHash("IsJumping"), true);
+            Animator.SetBool(Animator.StringToHash("IsWalking"), false);
+        }
+
+        if (State.AnimState == AnimState.WALK)
+        {
+            Animator.SetBool(Animator.StringToHash("IsWalking"), true);
+            Animator.SetBool(Animator.StringToHash("IsJumping"), false);
+        }
+
+        if (State.AnimState == AnimState.IDLE) {
+            Animator.SetBool(Animator.StringToHash("IsWalking"), false);
+            Animator.SetBool(Animator.StringToHash("IsJumping"), false);
+            Animator.SetBool(Animator.StringToHash("IsAttacking"), false);
+        }
+    }
+
     private void Update()
     {
         if (Input.GetButtonDown("Talk") && !!npcInRange)
             npcInRange.dialog();
 
+        
+
         Inputs.X = Input.GetAxis("Horizontal") >= 0 ? (float)Math.Ceiling(Input.GetAxis("Horizontal")) : (float)Math.Floor(Input.GetAxis("Horizontal"));
+        if (State.AnimState != AnimState.JUMP) // Define in PlayerMovement FixedUpdate
+        {
+            if (Inputs.X == 0) State.AnimState = AnimState.IDLE;
+            else State.AnimState = AnimState.WALK;
+        }
 
         State.CanAttack = true;
 
@@ -58,14 +91,13 @@ public class PlayerController : MonoBehaviour
         }
         Inputs.Y = Input.GetButtonDown("Jump") ? 1 : 0;//(float)Math.Ceiling((double)Input.GetAxis("Vertical"));
 
-        Animator Animator = GetComponent<Animator>();
+        
         if (Input.GetButtonDown("Attack") && State.CanAttack)
         {
-            Animator.SetBool(Animator.StringToHash("IsAttacking"), true);
+            State.AnimState = AnimState.ATTACK;
         }
-        else {
-            Animator.SetBool(Animator.StringToHash("IsAttacking"), false); 
-        }
+
+        ApplyAnimState();
     }
 
     // Update is called once per frame

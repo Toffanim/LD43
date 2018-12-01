@@ -15,9 +15,18 @@ public enum State
     NO_LIMBS          // o-|
 }
 
+public enum AnimState
+{
+    IDLE,
+    WALK,
+    JUMP,
+    ATTACK
+}
+
 public class PlayerState : MonoBehaviour {
 
     public State State;
+    public AnimState AnimState;
 
     public float Speed = 10;
     public float accel = 6f;
@@ -28,6 +37,7 @@ public class PlayerState : MonoBehaviour {
     // Use this for initialization
     void Start () {
         State = State.FULL_BODY;
+        AnimState = AnimState.IDLE;
 	}
 	
 	// Update is called once per frame
