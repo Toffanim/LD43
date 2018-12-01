@@ -111,6 +111,7 @@ public class PlayerMovements : MonoBehaviour
             if (IsOnWall() && !IsGrounded() && Controller.Inputs.Y == 1)
                 RB2D.velocity = new Vector2(-wallDirection() * State.Speed * 0.75f, RB2D.velocity.y);
 
+<<<<<<< HEAD
             if(!IsGrounded())
             {
                 State.AnimState = AnimState.JUMP;
@@ -119,6 +120,9 @@ public class PlayerMovements : MonoBehaviour
             {
                 State.AnimState = AnimState.IDLE;
             }
+=======
+            //Debug.Log(RB2D.velocity.x);
+>>>>>>> 6b66a7099d1d2cf319d095726da0f9d477aad6e5
             Controller.Inputs.Y = 0;
         }
         else if (State.State == global::State.ONE_LEG_TWO_ARMS)
