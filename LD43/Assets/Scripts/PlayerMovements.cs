@@ -111,7 +111,7 @@ public class PlayerMovements : MonoBehaviour
             if (IsOnWall() && !IsGrounded() && Controller.Inputs.Y == 1)
                 RB2D.velocity = new Vector2(-wallDirection() * State.Speed * 0.75f, RB2D.velocity.y);
 
-            Debug.Log(RB2D.velocity.x);
+            //Debug.Log(RB2D.velocity.x);
             Controller.Inputs.Y = 0;
         }
         else if (State.MoveSet == 2)

@@ -1,26 +1,55 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Dialog
 {
 
     // ATTRS
-    private List<DBlock> dialogChain { get; set; }
+    private List<DBlock> dialogResponses{ get; set; }
+    private int currentResponseIndex { get; set; }
+
     public  DBlock       dialogChainCurrentElem { get; set; }
-    public  DBlock       dialogChainRoot { get; set; }
+    public  DBlock       responseCurrentElem { get; set; }
+
+
+    public DBlock       dialogChainRoot { get; set; }
 
     public Dialog(int iRoot)
     {
+        currentResponseIndex = 0;
         dialogChainRoot = DialogBank.getDialogStartFromId(iRoot);
         if (dialogChainRoot!=null)
         {
             dialogChainCurrentElem = dialogChainRoot;
-            dialogChain = new List<DBlock>();
-            dialogChain.Add(dialogChainCurrentElem);
+            //dialogResponses = new List<DBlock>();
+            //fillResponses();
         }
     }
 
+    public void changeResponse()
+    {
+        currentResponseIndex++;
+        if ( currentResponseIndex >= dialogChainCurrentElem.responses.Count)
+            currentResponseIndex = 0;
+    }
+
+    /*
+    public void fillResponses()
+    {
+        Dictionary<string, DBlock> dico = dialogChainCurrentElem.responses;
+        dico.
+        dialogResponses = new List<DBlock>(dico.Count);
+        if (dico != null)
+        {
+            foreach ( string key in dico.Keys)
+            {
+                dialogResponses.Add( new DBlock(key) ); // KNOWN LIMITATION : MAKES RESPONSE MONO CHOICE
+            }
+        }
+    }
+    */
     public void resetDialog()
     {
         dialogChainCurrentElem = dialogChainRoot;
@@ -32,34 +61,39 @@ public class Dialog
         return (s!=null)?s:"not found";
     }
 
+    public string getResponse()
+    {
+        string s = dialogChainCurrentElem.responses.Values.ElementAt(currentResponseIndex).message;
+        return (s != null) ? s : "not found";
+    }
+
+    public string getResponseKey()
+    {
+        string s = (dialogChainCurrentElem.isFinalBlock()) ?
+         DialogBank.MONO_DIALOG : 
+         dialogChainCurrentElem.responses.Values.ElementAt(currentResponseIndex).rootKey;
+        Debug.Log("ID : " + currentResponseIndex + "  msg : " + s);
+        return (s != null) ? s : "not found";
+    }
+
     public Dictionary<string, DBlock> getChoices()
     { return dialogChainCurrentElem.responses; }
 	
-    public bool tryPursueDialog(string iChoiceKey)
+    public bool tryPursueDialog()
     {
-        Debug.Log("tryPursueDialog");
-
         if (dialogChainCurrentElem.isFinalBlock())
-        {
-            Debug.Log("rtrtrt");
             return false;
-        }
         if (dialogChainCurrentElem.responses.Count==0)
-        {
-            Debug.Log("gnhyntyhn");
             return false;
-        }
         if (dialogChainCurrentElem.responses.Count == 1)
         {
-            Debug.Log("MONO REPOZNZZ");
             dialogChainCurrentElem = ((DBlock)dialogChainCurrentElem.responses[DialogBank.MONO_DIALOG]);
             return true;
         }
-        else if (iChoiceKey != null)
+        else if (dialogChainCurrentElem.responses.Count > 1)
         {
-            DBlock nextDialogBlock;
-            dialogChainCurrentElem.responses.TryGetValue(iChoiceKey, out nextDialogBlock);
-            dialogChainCurrentElem = nextDialogBlock;
+            string response_key = dialogChainCurrentElem.responses.Values.ElementAt(currentResponseIndex).rootKey;
+            dialogChainCurrentElem = ((DBlock)dialogChainCurrentElem.responses[response_key]);
             return true;
         }
         return true;

@@ -10,11 +10,11 @@ public class NPC : MonoBehaviour {
     // INTERNAL
     public Dialog npcDialog { get; set; }
     bool inRangeOfPlayer;
+    public bool dialogStarted = false;
 
     //PV ATTR
     private GameObject dialogUI;
     private UIDialogController uiDialogController;
-    private bool __startDialog = false;
 
     public NPC( int iDialogRootId)
     {
@@ -24,7 +24,7 @@ public class NPC : MonoBehaviour {
         if (!!dialogUI)
             uiDialogController = dialogUI.GetComponentInChildren<UIDialogController>();
         dialogUI.SetActive(false);
-        __startDialog = false;
+        dialogStarted = false;
     }
     // Use this for initialization
     void Start () {
@@ -34,7 +34,7 @@ public class NPC : MonoBehaviour {
         if (!!dialogUI)
             uiDialogController = dialogUI.GetComponentInChildren<UIDialogController>();
         dialogUI.SetActive(false);
-        __startDialog = false;
+        dialogStarted = false;
     }
 
     // Update is called once per frame
@@ -43,7 +43,7 @@ public class NPC : MonoBehaviour {
 
     public void dialog()
     {
-        if (!__startDialog)
+        if (!dialogStarted)
         {
             if ((uiDialogController != null) && (npcDialog != null))
             {
@@ -53,14 +53,14 @@ public class NPC : MonoBehaviour {
                     uiDialogController.message = newMessage;
                 }
                 dialogUI.SetActive(true);
-                __startDialog = true;
+                dialogStarted = true;
             }
         }
         else
         {
             if (npcDialog != null)
             {
-                bool tryDialog = npcDialog.tryPursueDialog(null);
+                bool tryDialog = npcDialog.tryPursueDialog();
                 if (!tryDialog)
                     exitDialog(); 
                 else
@@ -73,8 +73,15 @@ public class NPC : MonoBehaviour {
                 }
             }
         }
-
+        uiDialogController.response = npcDialog.getResponseKey();
     }//! dialog
+
+    public void changeResponse()
+    {
+        if (npcDialog!=null)
+            npcDialog.changeResponse();
+        uiDialogController.response = npcDialog.getResponseKey();
+    }
 
     public void exitDialog()
     {
@@ -83,7 +90,7 @@ public class NPC : MonoBehaviour {
             uiDialogController = go.GetComponentInChildren<UIDialogController>();
         if (uiDialogController != null)
             dialogUI.SetActive(false);
-        __startDialog = false;
+        dialogStarted = false;
         if (!!resetDialog)
             npcDialog.resetDialog();
     }

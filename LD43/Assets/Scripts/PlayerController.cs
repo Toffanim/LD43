@@ -29,8 +29,18 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButtonDown("Talk") && !!npcInRange)
-            npcInRange.dialog();
+        if (npcInRange!=null)
+        {
+            if ((Input.GetButtonDown("ChangeResponse")) && npcInRange.dialogStarted )
+                npcInRange.changeResponse();
+            if (Input.GetButtonDown("Talk"))
+                npcInRange.dialog();
+
+            /*if (npcInRange.dialogStarted)
+                fillResponses();*/
+
+        }
+
 
         Inputs.X = Input.GetAxis("Horizontal") >= 0 ? (float)Math.Ceiling(Input.GetAxis("Horizontal")) : (float)Math.Floor(Input.GetAxis("Horizontal"));
 
