@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
         {
             SpriteRenderer SR = GetComponent<SpriteRenderer>();
             SR.flipX = true;
-            if (State.MoveSet == 3)
+            if (State.State == global::State.TWO_LEGS_ONE_ARM)
             {
                 State.CanAttack = false;
             }
@@ -51,13 +51,12 @@ public class PlayerController : MonoBehaviour
                 SpriteRenderer SR = GetComponent<SpriteRenderer>();
                 SR.flipX = false;
             }
-            if (State.MoveSet == 3)
+            if (State.State == global::State.TWO_ARMS)
             {
                 State.CanAttack = false;
             }
         }
         Inputs.Y = Input.GetButtonDown("Jump") ? 1 : 0;//(float)Math.Ceiling((double)Input.GetAxis("Vertical"));
-        State.State = Input.GetButtonDown("Jump") ? global::State.JUMP : State.State;
 
         Animator Animator = GetComponent<Animator>();
         if (Input.GetButtonDown("Attack") && State.CanAttack)
@@ -72,9 +71,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-       Inputs.X = Input.GetAxis("Horizontal") >= 0 ? (float) Math.Ceiling(Input.GetAxis("Horizontal")) : (float)Math.Floor(Input.GetAxis("Horizontal"));
-        Inputs.Y = Input.GetButtonDown("Jump") ? 1 : 0;//(float)Math.Ceiling((double)Input.GetAxis("Vertical"));
-        State.State = Input.GetButtonDown("Jump") ? global::State.JUMP : State.State ;
 
     }
 }
