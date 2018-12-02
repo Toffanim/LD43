@@ -143,7 +143,7 @@ public class PlayerMovements : MonoBehaviour
                                         0));
 
             RB2D.velocity = new Vector2((Controller.Inputs.X == 0 && IsGrounded()) ? 0 : RB2D.velocity.x,
-                                        (Controller.Inputs.Y == 1 && (IsTouchingSomething() || CanDoubleJump)) ? State.jump : RB2D.velocity.y);
+                                        (Controller.Inputs.Y == 1 && (IsTouchingSomething() || CanDoubleJump)) ? State.jump * 0.5f : RB2D.velocity.y);
 
             if (Controller.Inputs.Y == 1 && !IsTouchingSomething() && CanDoubleJump) CanDoubleJump = false;
 
