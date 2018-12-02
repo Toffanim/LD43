@@ -6,9 +6,13 @@ public class FlyingBehavior : MonoBehaviour {
     public Vector2 PlayerDirection;
     Rigidbody2D RB2D;
     bool StopMoving = false;
+    float RecoveryLength;
+    float RecoveryCount;
 	// Use this for initialization
 	void Start () {
         RB2D = GetComponent<Rigidbody2D>();
+        RecoveryLength = 0.1f;
+        RecoveryCount = 0;
 	}
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -21,8 +25,17 @@ public class FlyingBehavior : MonoBehaviour {
 
             if (!GetComponent<EnnemyState>().IsDamaged && !StopMoving)
             {
-                RB2D.AddForce(Direction * 80);
+                RB2D.AddForce(Direction * GetComponent<EnnemyState>().Speed);
             }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        var Player = GameObject.Find("Player 1");
+        if (Player == collision.gameObject)
+        {
+            RB2D.velocity = new Vector2(0, 0);
         }
     }
 
@@ -37,11 +50,8 @@ public class FlyingBehavior : MonoBehaviour {
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        var Player = GameObject.Find("Player 1");
-        if (Player == collision.gameObject)
-        {
-            StopMoving = false;
-        }
+        RecoveryCount = RecoveryLength;
+
     }
 
     // Update is called once per frame
@@ -51,6 +61,11 @@ public class FlyingBehavior : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        RB2D.velocity = (new Vector2(0,0));
+        // RB2D.velocity = (new Vector2(0,0));
+        RecoveryCount -= Time.deltaTime;
+        if (RecoveryCount <= 0)
+        {
+                StopMoving = false;
+        }
     }
 }

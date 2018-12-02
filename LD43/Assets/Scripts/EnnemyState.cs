@@ -11,6 +11,7 @@ public class EnnemyState : MonoBehaviour {
     bool WaitForFixUpdate = true;
     float KnockbackLength = 0.2f;
     float KnockbackCount = 0f;
+    public float Speed;
     // Use this for initialization
     void Start()
     {
@@ -30,7 +31,7 @@ public class EnnemyState : MonoBehaviour {
     private void FixedUpdate()
     {
         if(IsDamaged)
-             RB2D.AddForce(new Vector2(PlayerKnockback, PlayerKnockback));
+             RB2D.velocity = new Vector2( 3, 3 );
         KnockbackCount -= Time.deltaTime;
         WaitForFixUpdate = false;
     }
