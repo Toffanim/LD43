@@ -26,8 +26,8 @@ public class NPC : MonoBehaviour {
         //dialogUI = GameObject.Find("dialogGO");
         if (!!dialogUI)
             uiDialogController = dialogUI.GetComponentInChildren<UIDialogController>(true);
-        if ( !!uiDialogController)
-            uiDialogController.show(false);
+       /* if ( !!uiDialogController)
+            uiDialogController.show(false);*/
         dialogStarted = false;
     }
     // Use this for initialization
@@ -39,10 +39,10 @@ public class NPC : MonoBehaviour {
         if (!!dialogUI)
         { 
             uiDialogController = dialogUI.GetComponentInChildren<UIDialogController>(true);
-
+            /*
             if ( !!uiDialogController)
                 uiDialogController.show(false);
-
+*/
             dialogStarted = false;
         }
     }
@@ -100,7 +100,7 @@ public class NPC : MonoBehaviour {
                 {
                     MagicDoorController mgc = guardedDoor.GetComponent<MagicDoorController>();
                     if (!!mgc)
-                        mgc.open();
+                    { mgc.open(); disappear(); }
 
                 }
             }
@@ -151,5 +151,10 @@ public class NPC : MonoBehaviour {
             Debug.Log("OUT");
         }
         exitDialog();
+    }
+
+    void disappear()
+    {
+        Destroy(this);
     }
 }

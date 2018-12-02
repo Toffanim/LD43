@@ -126,7 +126,7 @@ public class PlayerMovements : MonoBehaviour
             }
             Controller.Inputs.Y = 0;
         }
-        else if (State.State == global::State.ONE_LEG_TWO_ARMS)
+        else if ((State.State == global::State.ONE_LEG_TWO_ARMS)||(State.State == global::State.ONE_LEG_ONE_ARM))
         {
             RB2D.AddForce(new Vector2(((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * State.airAccel,
                             0));
@@ -136,7 +136,7 @@ public class PlayerMovements : MonoBehaviour
 
             Controller.Inputs.Y = 0;
         }
-        else if (State.State == global::State.TWO_ARMS)
+        else if ((State.State == global::State.TWO_ARMS)||(State.State == global::State.ONE_ARM))
         {
             RB2D.AddForce(new Vector2(((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * (IsGrounded() ? State.accel*2 : State.airAccel),
                                         0));

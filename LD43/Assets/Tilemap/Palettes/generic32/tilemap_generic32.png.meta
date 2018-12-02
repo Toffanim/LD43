@@ -1206,8 +1206,8 @@ TextureImporter:
       outline: []
       physicsShape:
       - - {x: -16, y: 16}
-        - {x: -16, y: 10}
-        - {x: 16, y: 10}
+        - {x: -16, y: -16}
+        - {x: 1, y: 1}
         - {x: 16, y: 16}
       tessellationDetail: 0
       bones: []
@@ -1230,8 +1230,8 @@ TextureImporter:
       outline: []
       physicsShape:
       - - {x: -16, y: 16}
-        - {x: -16, y: 10}
-        - {x: 16, y: 10}
+        - {x: -16, y: 8}
+        - {x: 16, y: 8}
         - {x: 16, y: 16}
       tessellationDetail: 0
       bones: []
@@ -1254,8 +1254,8 @@ TextureImporter:
       outline: []
       physicsShape:
       - - {x: -16, y: 16}
-        - {x: -16, y: 10}
-        - {x: 16, y: 10}
+        - {x: 0, y: -3}
+        - {x: 16, y: -16}
         - {x: 16, y: 16}
       tessellationDetail: 0
       bones: []
@@ -1511,8 +1511,8 @@ TextureImporter:
       physicsShape:
       - - {x: -16, y: 16}
         - {x: -16, y: -16}
-        - {x: -12, y: -16}
-        - {x: 16, y: 12}
+        - {x: -16, y: -16}
+        - {x: 16, y: 16}
         - {x: 16, y: 16}
       tessellationDetail: 0
       bones: []
@@ -1535,8 +1535,8 @@ TextureImporter:
       outline: []
       physicsShape:
       - - {x: -16, y: 16}
-        - {x: -16, y: 12}
-        - {x: 12, y: -16}
+        - {x: -16, y: 16}
+        - {x: 16, y: -16}
         - {x: 16, y: -16}
         - {x: 16, y: 16}
       tessellationDetail: 0
@@ -1702,8 +1702,8 @@ TextureImporter:
       - - {x: -16, y: 16}
         - {x: -16, y: -16}
         - {x: 16, y: -16}
-        - {x: 16, y: -12}
-        - {x: -12, y: 16}
+        - {x: 16, y: -16}
+        - {x: -16, y: 16}
       tessellationDetail: 0
       bones: []
       spriteID: 302477365db31604cb14f61569369d4e
@@ -1724,8 +1724,9 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape:
-      - - {x: 12, y: 16}
-        - {x: -16, y: -12}
+      - - {x: 16, y: 16}
+        - {x: 6, y: 7}
+        - {x: -16, y: -16}
         - {x: -16, y: -16}
         - {x: 16, y: -16}
         - {x: 16, y: 16}

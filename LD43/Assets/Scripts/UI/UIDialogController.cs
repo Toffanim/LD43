@@ -15,7 +15,7 @@ public class UIDialogController : MonoBehaviour {
     void Start () {
         __uiDialogText = GetComponentInChildren<UIDialogText>();
         __uiResponseText = GetComponentInChildren<UIResponseText>();
-        gameObject.SetActive(false);
+        show(false);
     }
 
     // Update is called once per frame
