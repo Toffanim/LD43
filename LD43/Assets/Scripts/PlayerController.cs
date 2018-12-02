@@ -51,6 +51,8 @@ public class PlayerController : MonoBehaviour
             Animator.SetBool(Animator.StringToHash("IsJumping"), false);
             Animator.SetBool(Animator.StringToHash("IsAttacking"), false);
         }
+
+        Animator.SetInteger(Animator.StringToHash("PlayerState"), (int)State.State);
     }
 
     private void Update()
