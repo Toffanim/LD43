@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
 
         if (Inputs.X < 0)
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            transform.localScale = new Vector3(transform.localScale.x < 0 ? transform.localScale.x : -transform.localScale.x, transform.localScale.y, transform.localScale.z);
             State.IsFacingRight = false;
             if (State.State == global::State.TWO_ARMS)
             {
@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (Inputs.X > 0)
         {
-            transform.localScale = new Vector3(1, 1, 1);
+            transform.localScale = new Vector3(transform.localScale.x < 0 ? -transform.localScale.x : transform.localScale.x, transform.localScale.y, transform.localScale.z);
             State.IsFacingRight = true;
             if (State.State == global::State.TWO_ARMS)
             {
