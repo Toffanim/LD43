@@ -38041,6 +38041,21 @@ Prefab:
       propertyPath: m_Size.y
       value: 0.1291424
       objectReference: {fileID: 0}
+    - target: {fileID: 61892163277930732, guid: 873893731c6062b40a2da7ac4b46bc0f,
+        type: 2}
+      propertyPath: m_Offset.x
+      value: 0.16199386
+      objectReference: {fileID: 0}
+    - target: {fileID: 61892163277930732, guid: 873893731c6062b40a2da7ac4b46bc0f,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 0.30976558
+      objectReference: {fileID: 0}
+    - target: {fileID: 114522263057449712, guid: 873893731c6062b40a2da7ac4b46bc0f,
+        type: 2}
+      propertyPath: Damage
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 873893731c6062b40a2da7ac4b46bc0f, type: 2}
   m_IsPrefabAsset: 0
@@ -38282,7 +38297,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.0010945797, y: -0.0013288558}
