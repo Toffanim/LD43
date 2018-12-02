@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System;
 
 public struct MovementInputs {
@@ -136,6 +137,7 @@ public class PlayerController : MonoBehaviour
     public void kill()
     {
         Debug.Log("You've been killed !");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void teleportToLocation(Transform iTransform)
