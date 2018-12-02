@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IntroEventController : MonoBehaviour {
+public class IntroEventController : Cinematic {
 
     // REQUIRED ACTORS
     public GameObject princessGO;
@@ -11,10 +11,9 @@ public class IntroEventController : MonoBehaviour {
 
     private bool cinematicMustBePlayed;
     private bool ableToLaunchSequence;
-
+    private bool cinematicIsPlaying;
     //PV ATTR
-    private Vector3 Velocity = Vector3.zero;
-    float SmoothSpeed = 0.3f;
+
 
 
     // Use this for initialization
@@ -25,23 +24,29 @@ public class IntroEventController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        if (cinematicIsPlaying)
+            launchCinematic();
+
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        /*
         PlayerController pc = other.GetComponent<PlayerController>();
         if (!!pc && cinematicMustBePlayed)
         { launchCinematic(); }
+        */
+        PlayerController pc = other.GetComponent<PlayerController>();
+        if (!!pc && cinematicMustBePlayed)
+        { cinematicIsPlaying = true; cinematicMustBePlayed = false; }
     }
 
     public void launchCinematic()
     {
-        cinematicMustBePlayed = false;
-
         // GET
         PlayerController pc = playerGO.GetComponent<PlayerController>();
         PlayerFollower playerFollow = cameraGO.GetComponent<PlayerFollower>();
+        CinematicFollower CF = cameraGO.GetComponent<CinematicFollower>();
 
         // LOGIC
         if (!!pc)
@@ -50,28 +55,37 @@ public class IntroEventController : MonoBehaviour {
             if (!!playerFollow)
                 playerFollow.paused = true;
         }
+        if (!!CF)
+        {
+            CF.paused = false;
+        }
 
         // [..]
-        moveCameraToPrincess();
+        if (currentCinematicStage == 0)
+        {
+            moveCameraToPrincess();
 
-        Debug.Log("HELLO WORLD.....");
 
-        // TALK TO PRINCESS
-        NPC talkative = GetComponent<NPC>();
-        if (!!talkative)
-            talkative.dialog();
-
-        Wait(2);
-
-        quitCinematic();
-
+            // TALK TO PRINCESS
+            NPC talkative = GetComponent<NPC>();
+            if (!!talkative)
+                talkative.dialog();
+        }
+        if (currentCinematicStage == 2)
+        {
+            quitCinematic();
+            Destroy(gameObject);
+        }
     }
 
     public void quitCinematic()
     {
+        Debug.Log("quitCinematic.....");
+
         // GET
         PlayerController pc = playerGO.GetComponent<PlayerController>();
         PlayerFollower playerFollow = cameraGO.GetComponent<PlayerFollower>();
+        CinematicFollower CF = cameraGO.GetComponent<CinematicFollower>();
 
         // LOGIC
         if (!!pc)
@@ -80,18 +94,22 @@ public class IntroEventController : MonoBehaviour {
             if (!!playerFollow)
                 playerFollow.paused = false;
         }
+        if (!!CF)
+        {
+            CF.paused = true;
+        }
         ableToLaunchSequence = true;
+        cinematicIsPlaying = false;
     }
 
     void moveCameraToPrincess()
     {
+        Debug.Log("moveCameraToPrincess.....");
         Transform target = princessGO.transform;
-        Vector3 DesiredPosition;
-        if (!!target)
+        CinematicFollower CF = cameraGO.GetComponent<CinematicFollower>();
+        if(!!CF)
         {
-            DesiredPosition = target.position;
-            Vector3 SmoothedPosition = Vector3.SmoothDamp(transform.position, DesiredPosition, ref Velocity, SmoothSpeed);
-            transform.position = new Vector3(SmoothedPosition.x, SmoothedPosition.y, transform.position.z);
+            CF.setNewTarget(princessGO);
         }
     }
 

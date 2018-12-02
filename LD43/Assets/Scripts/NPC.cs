@@ -9,6 +9,7 @@ public class NPC : MonoBehaviour {
     public bool resetDialog = true;
     public GameObject guardedDoor;
     public GameObject dialogUI;
+    public GameObject relatedCinematic;
 
     // INTERNAL
     public Dialog npcDialog { get; set; }
@@ -86,6 +87,18 @@ public class NPC : MonoBehaviour {
         //RESOLVE EFFECT OF THE NEW MESSAGE
         if (!!capturedPlayerControlled)
         {
+            // CHECK FOR CINEMATIC END
+            if (npcDialog.getBlockEffect() == DBlock.DBLOCK_EFFECTS.FINISH_CINEMATIC)
+            {
+                Cinematic c = GetComponent<Cinematic>();
+                if (!!c)
+                {
+                    Debug.Log("NEXT CINEMATIC STAGE");
+                    c.currentCinematicStage++;
+                }
+            }
+
+            // MUTILATE PLAYER
             PlayerState ps = capturedPlayerControlled.GetComponent<PlayerState>();
             if (!!ps)
             {
@@ -130,7 +143,6 @@ public class NPC : MonoBehaviour {
             capturedPlayerControlled = pc;
             inRangeOfPlayer = true;
             pc.npcInRange = this;
-            Debug.Log("IN");
         }
     }
 
@@ -142,7 +154,6 @@ public class NPC : MonoBehaviour {
             capturedPlayerControlled = null;
             inRangeOfPlayer = false;
             pc.npcInRange = null;
-            Debug.Log("OUT");
         }
         exitDialog();
     }

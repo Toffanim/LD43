@@ -156,7 +156,10 @@ public class DialogBank {
     {
         DBlock retBlock = null;
 
-        retBlock = new DBlock("Help meeeeeeee!.");
+        Dictionary<string, DBlock> dicoA = new Dictionary<string, DBlock>();
+        dicoA.Add(MONO_DIALOG, new DBlock("Someone please help me !!", DBlock.DBLOCK_EFFECTS.FINISH_CINEMATIC));
+
+        retBlock = new DBlock("Help meeeeeeee!.", dicoA);
 
         return retBlock;
     }
