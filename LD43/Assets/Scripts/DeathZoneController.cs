@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DeathZoneController : MonoBehaviour
 {
-
+    public GameObject respawnLocationGO;
     // Use this for initialization
     void Start()
     {
@@ -21,6 +21,13 @@ public class DeathZoneController : MonoBehaviour
     {
         PlayerController pc = other.GetComponent<PlayerController>();
         if (!!pc)
-            pc.kill();
+        {
+            if (!!respawnLocationGO)
+            {
+                 pc.teleportToLocation(respawnLocationGO.gameObject.transform);
+            }
+            else
+                pc.kill();
+        }
     }
 }
