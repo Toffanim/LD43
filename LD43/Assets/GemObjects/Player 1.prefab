@@ -11,22 +11,6 @@ Prefab:
   m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1243343492986362}
   m_IsPrefabAsset: 1
---- !u!1 &1084643297135036
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4680116752746650}
-  - component: {fileID: 61632684991025346}
-  m_Layer: 0
-  m_Name: Weapon
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1243343492986362
 GameObject:
   m_ObjectHideFlags: 0
@@ -50,12 +34,29 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4680116752746650
+--- !u!1 &1458309935012578
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4686391987555792}
+  - component: {fileID: 61571373147370126}
+  - component: {fileID: 114806237366337084}
+  m_Layer: 0
+  m_Name: Weapon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4686391987555792
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1084643297135036}
+  m_GameObject: {fileID: 1458309935012578}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -70,10 +71,10 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1243343492986362}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.568, y: -0.2822494, z: -0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -4, y: 0, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
-  - {fileID: 4680116752746650}
+  - {fileID: 4686391987555792}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -97,16 +98,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &61632684991025346
+--- !u!61 &61571373147370126
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1084643297135036}
+  m_GameObject: {fileID: 1458309935012578}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.16199386, y: -0.039987624}
@@ -132,10 +133,10 @@ CapsuleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.59, y: 0.64}
+  m_Offset: {x: 0.17302632, y: 0.35421365}
+  m_Size: {x: 0.2634314, y: 0.5714431}
   m_Direction: 0
 --- !u!95 &95025159522637728
 Animator:
@@ -180,6 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d10f1c3b06f273544aabcabc7953f41c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FrictionOnSides: 0
 --- !u!114 &114150190738132636
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -191,6 +193,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75141b91d315ed94097802363a5d914c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114806237366337084
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1458309935012578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c311f42f2109614caf7db33674d0c7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Damage: 10
+  Knockback: 3
 --- !u!114 &114879742857176630
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -203,10 +218,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   State: 0
+  AnimState: 0
   Speed: 5
   accel: 6
   airAccel: 6
   jump: 6
+  KnockbackCount: 0
+  EnnemyKnockback: 0
+  IsFacingRight: 1
+  HP: 100
+  CanAttack: 1
+  IsDamaged: 0
 --- !u!212 &212410538549616020
 SpriteRenderer:
   m_ObjectHideFlags: 1
