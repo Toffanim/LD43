@@ -152,5 +152,10 @@ public class PlayerMovements : MonoBehaviour
 
             Controller.Inputs.Y = 0;
         }
+        else if ((State.State == global::State.CHAIR_BALL)) {
+            RB2D.velocity = new Vector2(Controller.Inputs.X * State.Speed, Controller.Inputs.Y * State.Speed);
+
+            Controller.Inputs.Y = 0;
+        }
     }
 }

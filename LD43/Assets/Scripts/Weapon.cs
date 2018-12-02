@@ -22,6 +22,17 @@ public class Weapon : MonoBehaviour {
         }
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        GameObject go = collision.gameObject;
+        EnnemyState es = go.GetComponent<EnnemyState>();
+        if (es && !collision.isTrigger)
+        {
+            var Dir = GetComponentInParent<PlayerState>().IsFacingRight ? 1 : -1;
+            es.OnDamage(Damage, Dir * Knockback);
+        }
+    }
+
     // Update is called once per frame
     void Update () {
 		

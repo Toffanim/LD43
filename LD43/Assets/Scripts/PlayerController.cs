@@ -98,8 +98,15 @@ public class PlayerController : MonoBehaviour
                     State.CanAttack = false;
                 }
             }
-            Inputs.Y = Input.GetButtonDown("Jump") ? 1 : 0;//(float)Math.Ceiling((double)Input.GetAxis("Vertical"));
 
+            if (State.State == global::State.CHAIR_BALL)
+            {
+                Inputs.Y = Input.GetAxis("Vertical") >= 0 ? (float)Math.Ceiling(Input.GetAxis("Vertical")) : (float)Math.Floor(Input.GetAxis("Vertical"));
+            }
+            else
+            {
+                Inputs.Y = Input.GetButtonDown("Jump") ? 1 : 0;//(float)Math.Ceiling((double)Input.GetAxis("Vertical"));
+            }
 
             if (Input.GetButtonDown("Attack") && State.CanAttack)
             {
