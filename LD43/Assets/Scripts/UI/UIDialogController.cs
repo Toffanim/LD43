@@ -26,4 +26,9 @@ public class UIDialogController : MonoBehaviour {
         if (!!__uiResponseText)
             __uiResponseText.currentMessage = response;
     }
+
+    public void show(bool iShow)
+    {
+        gameObject.SetActive(iShow);
+    }
 }

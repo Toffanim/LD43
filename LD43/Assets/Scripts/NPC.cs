@@ -23,10 +23,11 @@ public class NPC : MonoBehaviour {
     {
         dialogID = iDialogRootId;
         npcDialog = new Dialog(dialogID);
-        dialogUI = GameObject.Find("dialogGO");
+        //dialogUI = GameObject.Find("dialogGO");
         if (!!dialogUI)
-            uiDialogController = dialogUI.GetComponentInChildren<UIDialogController>();
-        dialogUI.SetActive(false);
+            uiDialogController = dialogUI.GetComponentInChildren<UIDialogController>(true);
+        if ( !!uiDialogController)
+            uiDialogController.show(false);
         dialogStarted = false;
     }
     // Use this for initialization
@@ -37,8 +38,11 @@ public class NPC : MonoBehaviour {
         //dialogUI = GameObject.Find("dialogGO");
         if (!!dialogUI)
         { 
-            uiDialogController = dialogUI.GetComponentInChildren<UIDialogController>();
-            dialogUI.SetActive(false);
+            uiDialogController = dialogUI.GetComponentInChildren<UIDialogController>(true);
+
+            if ( !!uiDialogController)
+                uiDialogController.show(false);
+
             dialogStarted = false;
         }
     }
@@ -51,15 +55,17 @@ public class NPC : MonoBehaviour {
     {
         if (!dialogStarted)
         {
-            if ((uiDialogController != null) && (npcDialog != null))
+            if (npcDialog != null)
             {
+                uiDialogController = dialogUI.GetComponentInChildren<UIDialogController>(true);
                 string newMessage = npcDialog.getMessage();
-                if (newMessage != null)
+                if ((newMessage != null)&& (uiDialogController != null))
                 {
                     uiDialogController.message = newMessage;
+                    if (!!uiDialogController)
+                        uiDialogController.show(true);
+                    dialogStarted = true;
                 }
-                dialogUI.SetActive(true);
-                dialogStarted = true;
             }
         }
         else
@@ -72,7 +78,7 @@ public class NPC : MonoBehaviour {
                 else // PURSUE DIALOG
                 {
                     string newMessage = npcDialog.getMessage();
-                    if (newMessage != null)
+                    if ((newMessage != null) && (uiDialogController != null))
                     {
                         uiDialogController.message = newMessage;
                     }
@@ -115,7 +121,7 @@ public class NPC : MonoBehaviour {
         if (!!go)
             uiDialogController = go.GetComponentInChildren<UIDialogController>();
         if (uiDialogController != null && dialogUI!=null)
-            dialogUI.SetActive(false);
+            uiDialogController.show(false);
         dialogStarted = false;
         if (!!resetDialog)
             npcDialog.resetDialog();
