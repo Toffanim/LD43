@@ -106,13 +106,22 @@ public class PlayerController : MonoBehaviour
                 State.AnimState = AnimState.ATTACK;
             }
         }// ! player not freezed
+        else
+        { // PLAYER IZ FREEZED
+
+        }
         ApplyAnimState();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-
+        if (freezeMovements)
+        {
+            Rigidbody2D rb2d = GetComponent<Rigidbody2D>();
+            if (!!rb2d)
+                rb2d.velocity = new Vector2(0,0);
+        }
     }
 
     public void kill()
