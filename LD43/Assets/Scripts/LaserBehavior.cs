@@ -16,7 +16,10 @@ public class LaserBehavior : MonoBehaviour {
         var Player = GameObject.Find("Player 1");
         if (Player == collision.gameObject)
         {
-            Player.GetComponent<PlayerState>().OnDamage(Damage, Knockback);
+            if (collision.transform.position.x > transform.position.x)
+                Player.GetComponent<PlayerState>().OnDamage(Damage, Knockback);
+            else
+                Player.GetComponent<PlayerState>().OnDamage(Damage, -Knockback);
         }
     }
 

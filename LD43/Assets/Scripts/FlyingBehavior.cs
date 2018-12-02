@@ -8,7 +8,8 @@ public class FlyingBehavior : MonoBehaviour {
     bool StopMoving = false;
     float RecoveryLength;
     float RecoveryCount;
-
+    int Damage = 10;
+    int Knockback = 3;
 
 	// Use this for initialization
 	void Start () {

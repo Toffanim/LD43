@@ -102,7 +102,7 @@ public class PlayerMovements : MonoBehaviour
 
         if(State.IsDamaged && State.KnockbackCount > 0)
         {
-                RB2D.velocity = new Vector2(State.EnnemyKnockback, State.EnnemyKnockback);
+                RB2D.velocity = new Vector2(State.EnnemyKnockback, State.EnnemyKnockback > 0 ? State.EnnemyKnockback : - State.EnnemyKnockback);
         }
         if ((State.State == global::State.FULL_BODY)||(State.State == global::State.TWO_LEGS_ONE_ARM))
         {

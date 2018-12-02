@@ -16,6 +16,7 @@ public class EnnemyState : MonoBehaviour {
     bool IsAlive = true;
     public bool CanBeDamaged = true;
     bool IsDamageOnRight = true;
+    bool IsFacingRight = false;
     // Use this for initialization
     void Start()
     {
@@ -38,12 +39,14 @@ public class EnnemyState : MonoBehaviour {
         }
     }
 
+
+
     private void FixedUpdate()
     {
         if (CanBeDamaged)
         {
             if (IsDamaged)
-                RB2D.velocity = new Vector2(PlayerKnockback, PlayerKnockback);
+                RB2D.velocity = new Vector2(PlayerKnockback, PlayerKnockback <= 0 ? -PlayerKnockback : PlayerKnockback);
             KnockbackCount -= Time.deltaTime;
             WaitForFixUpdate = false;
         }
@@ -51,10 +54,13 @@ public class EnnemyState : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+
         if(HP <= 0)
         {
             Debug.Log("ENNEMY DEAD");
             Object.Destroy(gameObject);
         }
-	}
+
+        if(KnockbackCount <= 0) IsDamaged = false;
+    }
 }

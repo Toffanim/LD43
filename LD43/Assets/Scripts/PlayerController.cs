@@ -87,7 +87,7 @@ public class PlayerController : MonoBehaviour
         else if (Inputs.X > 0)
         {
             transform.localScale = new Vector3(1, 1, 1);
-            State.IsFacingRight = false;
+            State.IsFacingRight = true;
             if (State.State == global::State.TWO_ARMS)
             {
                 State.CanAttack = false;

@@ -9,6 +9,9 @@ public class PatrolBehavior : MonoBehaviour
     public bool CanDoubleJump { get; set; }
     public bool AskedForJump { get; set; }
 
+    int Damage = 10;
+    int Knockback = 3;
+
     // Physics Data
     Rigidbody2D RB2D;
     //   Collision ray options
@@ -90,6 +93,7 @@ public class PatrolBehavior : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+
         if (IsGrounded())
             CanDoubleJump = true;
 
