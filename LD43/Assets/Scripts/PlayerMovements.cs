@@ -91,7 +91,7 @@ public class PlayerMovements : MonoBehaviour
 
     private void Update()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -100,23 +100,32 @@ public class PlayerMovements : MonoBehaviour
         if (IsGrounded())
             CanDoubleJump = true;
 
-        if(State.IsDamaged && State.KnockbackCount > 0)
+        if (State.IsDamaged && State.KnockbackCount > 0)
         {
-                RB2D.velocity = new Vector2(State.EnnemyKnockback, State.EnnemyKnockback > 0 ? State.EnnemyKnockback : - State.EnnemyKnockback);
+            RB2D.velocity = new Vector2(State.EnnemyKnockback, State.EnnemyKnockback > 0 ? State.EnnemyKnockback : -State.EnnemyKnockback);
         }
-        if ((State.State == global::State.FULL_BODY)||(State.State == global::State.TWO_LEGS_ONE_ARM))
+        if ((State.State == global::State.FULL_BODY) || (State.State == global::State.TWO_LEGS_ONE_ARM))
         {
             RB2D.AddForce(new Vector2(((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * (IsGrounded() ? State.accel : State.airAccel),
                                         0));
+
+            var CanJump = IsGrounded()
+                || (!IsGrounded() && IsOnWall() && CanDoubleJump)
+                || (!IsGrounded() && !IsTouchingSomething() && CanDoubleJump);
+
+            var velocity_y = ((Controller.Inputs.Y == 1) && CanJump) ? State.jump : RB2D.velocity.y;
             RB2D.velocity = new Vector2((Controller.Inputs.X == 0 && IsGrounded()) ? 0 : RB2D.velocity.x,
-                                    (Controller.Inputs.Y == 1 && (IsTouchingSomething() || CanDoubleJump)) ? State.jump : RB2D.velocity.y);
+                                    velocity_y);
 
-            if (Controller.Inputs.Y == 1 && !IsTouchingSomething() && CanDoubleJump) CanDoubleJump = false;
+            if (Controller.Inputs.Y == 1 && !IsGrounded() && CanJump ) CanDoubleJump = false;
 
-            if (IsOnWall() && !IsGrounded() && Controller.Inputs.Y == 1)
+            if ((Controller.Inputs.Y == 1) && ((IsOnWall() && !IsGrounded() && CanDoubleJump)))
+            {
                 RB2D.velocity = new Vector2(-wallDirection() * State.Speed * 0.75f, RB2D.velocity.y);
+                CanDoubleJump = false;
+            }
 
-            if(!IsGrounded())
+            if (!IsGrounded())
             {
                 State.AnimState = AnimState.JUMP;
             }
@@ -126,20 +135,32 @@ public class PlayerMovements : MonoBehaviour
             }
             Controller.Inputs.Y = 0;
         }
-        else if ((State.State == global::State.ONE_LEG_TWO_ARMS)||(State.State == global::State.ONE_LEG_ONE_ARM))
+        else if ((State.State == global::State.ONE_LEG_TWO_ARMS) || (State.State == global::State.ONE_LEG_ONE_ARM))
         {
-            RB2D.AddForce(new Vector2(((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * State.airAccel,
-                            0));
+            RB2D.AddForce(new Vector2(((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * (IsGrounded() ? State.accel : State.airAccel),
+                                                    0));
 
+            var CanJump = IsGrounded()
+                || (!IsGrounded() && IsOnWall() && CanDoubleJump && Controller.Inputs.Y == 1)
+                || (!IsGrounded() && !IsTouchingSomething() && CanDoubleJump && Controller.Inputs.Y == 1);
+
+            var velocity_y = ( CanJump) ? State.jump : RB2D.velocity.y;
             RB2D.velocity = new Vector2((Controller.Inputs.X == 0 && IsGrounded()) ? 0 : RB2D.velocity.x,
-                                         (IsTouchingSomething() && IsGrounded()) ? State.jump : RB2D.velocity.y);
+                                    velocity_y);
 
+            if (Controller.Inputs.Y == 1 && !IsGrounded() && CanJump) CanDoubleJump = false;
+
+            if ((Controller.Inputs.Y == 1) && ((IsOnWall() && !IsGrounded() && CanDoubleJump)))
+            {
+                RB2D.velocity = new Vector2(-wallDirection() * State.Speed * 0.75f, RB2D.velocity.y);
+                CanDoubleJump = false;
+            }
             State.AnimState = AnimState.JUMP;
             Controller.Inputs.Y = 0;
         }
-        else if ((State.State == global::State.TWO_ARMS)||(State.State == global::State.ONE_ARM) || (State.State == global::State.NO_LIMBS))
+        else if ((State.State == global::State.TWO_ARMS) || (State.State == global::State.ONE_ARM) || (State.State == global::State.NO_LIMBS))
         {
-            RB2D.AddForce(new Vector2(((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * (IsGrounded() ? State.accel*2 : State.airAccel),
+            RB2D.AddForce(new Vector2(((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * (IsGrounded() ? State.accel * 2 : State.airAccel),
                                         0));
 
             RB2D.velocity = new Vector2((Controller.Inputs.X == 0 && IsGrounded()) ? 0 : RB2D.velocity.x,
@@ -152,7 +173,8 @@ public class PlayerMovements : MonoBehaviour
 
             Controller.Inputs.Y = 0;
         }
-        else if ((State.State == global::State.CHAIR_BALL)) {
+        else if ((State.State == global::State.CHAIR_BALL))
+        {
             RB2D.velocity = new Vector2(Controller.Inputs.X * State.Speed, Controller.Inputs.Y * State.Speed);
 
             Controller.Inputs.Y = 0;
