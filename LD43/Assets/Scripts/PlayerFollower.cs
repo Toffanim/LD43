@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerFollower : MonoBehaviour
 {
 
+    public bool paused { get; set; }
+
     float SmoothSpeed = 0.3f;
     Transform target;
     private Vector3 Velocity = Vector3.zero;
@@ -12,18 +14,21 @@ public class PlayerFollower : MonoBehaviour
     void Start()
     {
         target = GameObject.Find("Player 1").transform;
+        paused = false;
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
-        Vector3 DesiredPosition;
-        if (target)
+        if(!paused)
         {
-            DesiredPosition = target.position;
-            Vector3 SmoothedPosition = Vector3.SmoothDamp(transform.position, DesiredPosition, ref Velocity, SmoothSpeed);
-            transform.position = new Vector3(SmoothedPosition.x, SmoothedPosition.y, transform.position.z);
+            Vector3 DesiredPosition;
+            if (target)
+            {
+                DesiredPosition = target.position;
+                Vector3 SmoothedPosition = Vector3.SmoothDamp(transform.position, DesiredPosition, ref Velocity, SmoothSpeed);
+                transform.position = new Vector3(SmoothedPosition.x, SmoothedPosition.y, transform.position.z);
+            }
         }
-
     }
 }

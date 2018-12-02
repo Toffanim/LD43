@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
 
     public MovementInputs Inputs;
     public bool FrictionOnSides = false;
+    public bool freezeMovements { get; set; }
 
     //PV ATTR
     public NPC npcInRange { get; set; }
@@ -25,6 +26,7 @@ public class PlayerController : MonoBehaviour
     {
         State = GetComponent<PlayerState>();
         npcInRange = null;
+        freezeMovements = false;
     }
 
     private void ApplyAnimState()
@@ -57,6 +59,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+
         if (npcInRange!=null)
         {
             if ( Input.GetButtonDown("ChangeResponse")  && npcInRange.dialogStarted )
@@ -66,43 +69,43 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        
-
-        Inputs.X = Input.GetAxis("Horizontal") >= 0 ? (float)Math.Ceiling(Input.GetAxis("Horizontal")) : (float)Math.Floor(Input.GetAxis("Horizontal"));
-        if (State.AnimState != AnimState.JUMP) // Define in PlayerMovement FixedUpdate
+        if (!freezeMovements)
         {
-            if (Inputs.X == 0) State.AnimState = AnimState.IDLE;
-            else State.AnimState = AnimState.WALK;
-        }
-
-        State.CanAttack = true;
-
-        if (Inputs.X < 0)
-        {
-            transform.localScale = new Vector3(transform.localScale.x < 0 ? transform.localScale.x : -transform.localScale.x, transform.localScale.y, transform.localScale.z);
-            State.IsFacingRight = false;
-            if (State.State == global::State.TWO_ARMS)
+            Inputs.X = Input.GetAxis("Horizontal") >= 0 ? (float)Math.Ceiling(Input.GetAxis("Horizontal")) : (float)Math.Floor(Input.GetAxis("Horizontal"));
+            if (State.AnimState != AnimState.JUMP) // Define in PlayerMovement FixedUpdate
             {
-                State.CanAttack = false;
+                if (Inputs.X == 0) State.AnimState = AnimState.IDLE;
+                else State.AnimState = AnimState.WALK;
             }
-        }
-        else if (Inputs.X > 0)
-        {
-            transform.localScale = new Vector3(transform.localScale.x < 0 ? -transform.localScale.x : transform.localScale.x, transform.localScale.y, transform.localScale.z);
-            State.IsFacingRight = true;
-            if (State.State == global::State.TWO_ARMS)
+
+            State.CanAttack = true;
+
+            if (Inputs.X < 0)
             {
-                State.CanAttack = false;
+                transform.localScale = new Vector3(transform.localScale.x < 0 ? transform.localScale.x : -transform.localScale.x, transform.localScale.y, transform.localScale.z);
+                State.IsFacingRight = false;
+                if (State.State == global::State.TWO_ARMS)
+                {
+                    State.CanAttack = false;
+                }
             }
-        }
-        Inputs.Y = Input.GetButtonDown("Jump") ? 1 : 0;//(float)Math.Ceiling((double)Input.GetAxis("Vertical"));
+            else if (Inputs.X > 0)
+            {
+                transform.localScale = new Vector3(transform.localScale.x < 0 ? -transform.localScale.x : transform.localScale.x, transform.localScale.y, transform.localScale.z);
+                State.IsFacingRight = true;
+                if (State.State == global::State.TWO_ARMS)
+                {
+                    State.CanAttack = false;
+                }
+            }
+            Inputs.Y = Input.GetButtonDown("Jump") ? 1 : 0;//(float)Math.Ceiling((double)Input.GetAxis("Vertical"));
 
-        
-        if (Input.GetButtonDown("Attack") && State.CanAttack)
-        {
-            State.AnimState = AnimState.ATTACK;
-        }
 
+            if (Input.GetButtonDown("Attack") && State.CanAttack)
+            {
+                State.AnimState = AnimState.ATTACK;
+            }
+        }// ! player not freezed
         ApplyAnimState();
     }
 
@@ -110,6 +113,11 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
 
+    }
+
+    public void kill()
+    {
+        Debug.Log("You've been killed !");
     }
 }
 

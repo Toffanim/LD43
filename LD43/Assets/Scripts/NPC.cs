@@ -23,11 +23,9 @@ public class NPC : MonoBehaviour {
     {
         dialogID = iDialogRootId;
         npcDialog = new Dialog(dialogID);
-        //dialogUI = GameObject.Find("dialogGO");
         if (!!dialogUI)
             uiDialogController = dialogUI.GetComponentInChildren<UIDialogController>(true);
-       /* if ( !!uiDialogController)
-            uiDialogController.show(false);*/
+
         dialogStarted = false;
     }
     // Use this for initialization
@@ -35,14 +33,10 @@ public class NPC : MonoBehaviour {
     {
         inRangeOfPlayer = false;
         npcDialog = new Dialog(dialogID);
-        //dialogUI = GameObject.Find("dialogGO");
         if (!!dialogUI)
         { 
             uiDialogController = dialogUI.GetComponentInChildren<UIDialogController>(true);
-            /*
-            if ( !!uiDialogController)
-                uiDialogController.show(false);
-*/
+
             dialogStarted = false;
         }
     }
