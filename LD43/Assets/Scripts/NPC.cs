@@ -5,9 +5,10 @@ using UnityEngine;
 public class NPC : MonoBehaviour {
 
     // SETTABLE
-    public int dialogID = 2;
+    public int dialogID ;
     public bool resetDialog = true;
     public GameObject guardedDoor;
+    public GameObject dialogUI;
 
     // INTERNAL
     public Dialog npcDialog { get; set; }
@@ -16,7 +17,6 @@ public class NPC : MonoBehaviour {
 
     //PV ATTR
     private PlayerController capturedPlayerControlled;
-    private GameObject dialogUI;
     private UIDialogController uiDialogController;
 
     public NPC( int iDialogRootId)
@@ -30,14 +30,17 @@ public class NPC : MonoBehaviour {
         dialogStarted = false;
     }
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         inRangeOfPlayer = false;
         npcDialog = new Dialog(dialogID);
-        dialogUI = GameObject.Find("dialogGO");
+        //dialogUI = GameObject.Find("dialogGO");
         if (!!dialogUI)
+        { 
             uiDialogController = dialogUI.GetComponentInChildren<UIDialogController>();
-        dialogUI.SetActive(false);
-        dialogStarted = false;
+            dialogUI.SetActive(false);
+            dialogStarted = false;
+        }
     }
 
     // Update is called once per frame
@@ -77,7 +80,8 @@ public class NPC : MonoBehaviour {
                 }
             }
         }
-        uiDialogController.response = npcDialog.getResponseKey();
+        if (npcDialog!=null && uiDialogController!=null)
+            uiDialogController.response = npcDialog.getResponseKey();
 
         //RESOLVE EFFECT OF THE NEW MESSAGE
         if (!!capturedPlayerControlled)
@@ -110,7 +114,7 @@ public class NPC : MonoBehaviour {
         GameObject go = GameObject.Find("dialogGO");
         if (!!go)
             uiDialogController = go.GetComponentInChildren<UIDialogController>();
-        if (uiDialogController != null)
+        if (uiDialogController != null && dialogUI!=null)
             dialogUI.SetActive(false);
         dialogStarted = false;
         if (!!resetDialog)
