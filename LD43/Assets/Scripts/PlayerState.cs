@@ -54,26 +54,30 @@ public class PlayerState : MonoBehaviour {
 		
 	}
 
-    public void mutilate(DBlock.DBLOCK_EFFECTS iBlockEffect)
+    public bool mutilate(DBlock.DBLOCK_EFFECTS iBlockEffect)
     {
+        bool rc = false;
         switch (iBlockEffect)
         {
             case DBlock.DBLOCK_EFFECTS.LOSE_ARM:
                 n_arms--;
                 State = processNewPlayerState();
-                Debug.Log("MUTILATE ARM");
+                rc = true;
                 break;
             case DBlock.DBLOCK_EFFECTS.LOSE_LEG:
                 n_legs--;
                 State = processNewPlayerState();
-                Debug.Log("MUTILATE LEG");
+                rc = true;
                 break;
             case DBlock.DBLOCK_EFFECTS.LOSE_BODY:
                 State = State.CHAIR_BALL;
+                rc = true;
                 break;
             default:
+                rc = false;
                 break;
         }
+        return rc;
     }
 
     private State processNewPlayerState()
