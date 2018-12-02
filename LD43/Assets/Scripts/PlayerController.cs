@@ -57,6 +57,8 @@ public class PlayerController : MonoBehaviour
         Animator.SetInteger(Animator.StringToHash("PlayerState"), (int)State.State);
     }
 
+
+
     private void Update()
     {
 
@@ -134,6 +136,12 @@ public class PlayerController : MonoBehaviour
     public void kill()
     {
         Debug.Log("You've been killed !");
+    }
+
+    public void teleportToLocation(Transform iTransform)
+    {
+
+        gameObject.transform.position = iTransform.position;
     }
 }
 
