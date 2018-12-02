@@ -3,15 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour {
+    public int Damage = 10;
+    public int Knockback = 50;
 
 	// Use this for initialization
 	void Start () {
 		
 	}
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Damage!!!!!");
+        GameObject go = collision.gameObject;
+        EnnemyState es = go.GetComponent<EnnemyState>();
+        if(es && !collision.isTrigger)
+        {
+            es.OnDamage( Damage, Knockback );
+        }
     }
 
     // Update is called once per frame

@@ -98,8 +98,10 @@ public class PatrolBehavior : MonoBehaviour
             Direction = (T != 0) ? T : Direction;
         }
 
-        Debug.Log(Direction);
-        RB2D.AddForce(new Vector2(( Direction) * 30f,
+            if (!GetComponent<EnnemyState>().IsDamaged )
+            {
+                RB2D.AddForce(new Vector2((Direction) * GetComponent<EnnemyState>().Speed,
                                     0));
+            }
     }
 }
