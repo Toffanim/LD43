@@ -99,6 +99,11 @@ public class PlayerMovements : MonoBehaviour
     {
         if (IsGrounded())
             CanDoubleJump = true;
+
+        if(State.IsDamaged && State.KnockbackCount > 0)
+        {
+                RB2D.velocity = new Vector2(State.EnnemyKnockback, State.EnnemyKnockback);
+        }
         if ((State.State == global::State.FULL_BODY)||(State.State == global::State.TWO_LEGS_ONE_ARM))
         {
             RB2D.AddForce(new Vector2(((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * (IsGrounded() ? State.accel : State.airAccel),

@@ -5,6 +5,7 @@ using UnityEngine;
 public class LaserBehavior : MonoBehaviour {
 
     public int Damage = 10;
+    public int Knockback = 3;
 	// Use this for initialization
 	void Start () {
 		
@@ -15,7 +16,7 @@ public class LaserBehavior : MonoBehaviour {
         var Player = GameObject.Find("Player 1");
         if (Player == collision.gameObject)
         {
-            Player.GetComponent<PlayerState>().OnDamage(Damage);
+            Player.GetComponent<PlayerState>().OnDamage(Damage, Knockback);
         }
     }
 
@@ -24,7 +25,7 @@ public class LaserBehavior : MonoBehaviour {
         var Player = GameObject.Find("Player 1");
         if (Player == collision.gameObject)
         {
-            Player.GetComponent<PlayerState>().OnDamage(Damage);
+            Player.GetComponent<PlayerState>().OnDamage(Damage, Knockback);
         }
     }
 

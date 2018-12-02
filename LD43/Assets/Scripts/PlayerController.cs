@@ -77,8 +77,8 @@ public class PlayerController : MonoBehaviour
 
         if (Inputs.X < 0)
         {
-            SpriteRenderer SR = GetComponent<SpriteRenderer>();
-            SR.flipX = true;
+            transform.localScale = new Vector3(-1, 1, 1);
+            State.IsFacingRight = false;
             if (State.State == global::State.TWO_ARMS)
             {
                 State.CanAttack = false;
@@ -86,10 +86,8 @@ public class PlayerController : MonoBehaviour
         }
         else if (Inputs.X > 0)
         {
-            {
-                SpriteRenderer SR = GetComponent<SpriteRenderer>();
-                SR.flipX = false;
-            }
+            transform.localScale = new Vector3(1, 1, 1);
+            State.IsFacingRight = false;
             if (State.State == global::State.TWO_ARMS)
             {
                 State.CanAttack = false;

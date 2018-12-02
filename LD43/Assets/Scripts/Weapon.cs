@@ -17,6 +17,7 @@ public class Weapon : MonoBehaviour {
         EnnemyState es = go.GetComponent<EnnemyState>();
         if(es && !collision.isTrigger)
         {
+            var Dir = GetComponentInParent<PlayerState>().IsFacingRight ? 1 : -1;
             es.OnDamage( Damage, Knockback );
         }
     }

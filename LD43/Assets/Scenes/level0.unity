@@ -38120,4 +38120,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 10
-  Knockback: 80
+  Knockback: 3

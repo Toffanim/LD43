@@ -33,10 +33,16 @@ public class PlayerState : MonoBehaviour {
     public float accel = 6f;
     public float airAccel = 6f;
     public float jump = 0.1f;
+    float KnockbackLength = 0.2f;
+    public float KnockbackCount = 0f;
+    public int EnnemyKnockback;
+    int EnnemyDamage;
+    public bool IsFacingRight = true;
 
     public int HP =  100;
 
     public bool CanAttack = true;
+    public bool IsDamaged;
 
     // PV STATS
     private int n_arms = 2;
@@ -55,12 +61,28 @@ public class PlayerState : MonoBehaviour {
 	void Update () {
 		if( HP <= 0 )
         {
+            Debug.Log("PLEAYER DEAD");
             Object.Destroy(gameObject);
         }
-	}
 
-    public void OnDamage(int Damage)
+        if (KnockbackCount <= 0)
+        {
+            IsDamaged = false;
+        }
+    }
+
+    private void FixedUpdate()
     {
+        KnockbackCount -= Time.deltaTime;
+    }
+
+    public void OnDamage(int Damage, int Knockback)
+    {
+        IsDamaged = true;
+        EnnemyDamage = Damage;
+        EnnemyKnockback = Knockback;
+
+        KnockbackCount = KnockbackLength;
         HP -= Damage;
     }
 
