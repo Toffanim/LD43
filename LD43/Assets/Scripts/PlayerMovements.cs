@@ -132,8 +132,9 @@ public class PlayerMovements : MonoBehaviour
                             0));
 
             RB2D.velocity = new Vector2((Controller.Inputs.X == 0 && IsGrounded()) ? 0 : RB2D.velocity.x,
-                                         IsTouchingSomething() ? State.jump : RB2D.velocity.y);
+                                         (IsTouchingSomething() && IsGrounded()) ? State.jump : RB2D.velocity.y);
 
+            State.AnimState = AnimState.JUMP;
             Controller.Inputs.Y = 0;
         }
         else if ((State.State == global::State.TWO_ARMS)||(State.State == global::State.ONE_ARM))
