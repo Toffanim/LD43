@@ -34,6 +34,9 @@ public class DialogBank {
             case 5:
                 retBlock = wizard5();
                 break;
+            case 6:
+                retBlock = princess();
+                break;
             case ERROR_CODE:
                 retBlock = new DBlock("something wrong happened.;.");
                 break;
@@ -147,6 +150,15 @@ public class DialogBank {
 
         return retBlock;
 
+    }
+
+    public static DBlock princess()
+    {
+        DBlock retBlock = null;
+
+        retBlock = new DBlock("Help meeeeeeee!.");
+
+        return retBlock;
     }
 
     public static DBlock getErrorBlock()
