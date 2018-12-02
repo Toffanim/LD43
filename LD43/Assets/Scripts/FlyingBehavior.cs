@@ -8,6 +8,8 @@ public class FlyingBehavior : MonoBehaviour {
     bool StopMoving = false;
     float RecoveryLength;
     float RecoveryCount;
+
+
 	// Use this for initialization
 	void Start () {
         RB2D = GetComponent<Rigidbody2D>();

@@ -34,6 +34,8 @@ public class PlayerState : MonoBehaviour {
     public float airAccel = 6f;
     public float jump = 0.1f;
 
+    public int HP =  100;
+
     public bool CanAttack = true;
 
     // PV STATS
@@ -51,8 +53,16 @@ public class PlayerState : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if( HP <= 0 )
+        {
+            Object.Destroy(gameObject);
+        }
 	}
+
+    public void OnDamage(int Damage)
+    {
+        HP -= Damage;
+    }
 
     public bool mutilate(DBlock.DBLOCK_EFFECTS iBlockEffect)
     {

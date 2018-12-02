@@ -12,28 +12,40 @@ public class EnnemyState : MonoBehaviour {
     float KnockbackLength = 0.2f;
     float KnockbackCount = 0f;
     public float Speed;
+    public int HP;
+    bool IsAlive = true;
+    public bool CanBeDamaged = true;
     // Use this for initialization
     void Start()
     {
         RB2D = GetComponent<Rigidbody2D>();
+        HP = 1;
     }
 
     public void OnDamage(int Damage, int Knockback)
     {
-        IsDamaged = true;
-        PlayerDamage = Damage;
-        PlayerKnockback = Knockback;
-        WaitForFixUpdate = true;
+        if (CanBeDamaged)
+        {
+            IsDamaged = true;
+            PlayerDamage = Damage;
+            PlayerKnockback = Knockback;
+            WaitForFixUpdate = true;
 
-        KnockbackCount = KnockbackLength;
+            KnockbackCount = KnockbackLength;
+
+            HP -= Damage;
+        }
     }
 
     private void FixedUpdate()
     {
-        if(IsDamaged)
-             RB2D.velocity = new Vector2( 3, 3 );
-        KnockbackCount -= Time.deltaTime;
-        WaitForFixUpdate = false;
+        if (CanBeDamaged)
+        {
+            if (IsDamaged)
+                RB2D.velocity = new Vector2(3, 3);
+            KnockbackCount -= Time.deltaTime;
+            WaitForFixUpdate = false;
+        }
     }
 
     // Update is called once per frame
@@ -41,6 +53,11 @@ public class EnnemyState : MonoBehaviour {
         if (KnockbackCount <= 0)
         {
             IsDamaged = false;
+        }
+
+        if(HP <= 0)
+        {
+            Object.Destroy(gameObject);
         }
 	}
 }
