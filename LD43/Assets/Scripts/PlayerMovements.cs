@@ -137,7 +137,7 @@ public class PlayerMovements : MonoBehaviour
             State.AnimState = AnimState.JUMP;
             Controller.Inputs.Y = 0;
         }
-        else if ((State.State == global::State.TWO_ARMS)||(State.State == global::State.ONE_ARM))
+        else if ((State.State == global::State.TWO_ARMS)||(State.State == global::State.ONE_ARM) || (State.State == global::State.NO_LIMBS))
         {
             RB2D.AddForce(new Vector2(((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * (IsGrounded() ? State.accel*2 : State.airAccel),
                                         0));
