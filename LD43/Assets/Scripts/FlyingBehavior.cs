@@ -5,6 +5,7 @@ using UnityEngine;
 public class FlyingBehavior : MonoBehaviour {
     public Vector2 PlayerDirection;
     Rigidbody2D RB2D;
+    bool StopMoving = false;
 	// Use this for initialization
 	void Start () {
         RB2D = GetComponent<Rigidbody2D>();
@@ -18,10 +19,28 @@ public class FlyingBehavior : MonoBehaviour {
             Vector3 Direction = (Player.transform.position - gameObject.transform.position);
             Direction.Normalize();
 
-            if (!GetComponent<EnnemyState>().IsDamaged)
+            if (!GetComponent<EnnemyState>().IsDamaged && !StopMoving)
             {
                 RB2D.AddForce(Direction * 80);
             }
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        var Player = GameObject.Find("Player 1");
+        if (Player == collision.gameObject)
+        {
+            StopMoving = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        var Player = GameObject.Find("Player 1");
+        if (Player == collision.gameObject)
+        {
+            StopMoving = false;
         }
     }
 
