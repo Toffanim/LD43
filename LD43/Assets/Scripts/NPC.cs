@@ -46,6 +46,12 @@ public class NPC : MonoBehaviour {
     void Update () {
     }
 
+    public void loadNewDialog(int iNewDialogID)
+    {
+        dialogID = iNewDialogID;
+        npcDialog = new Dialog(dialogID);
+    }
+
     public void dialog()
     {
         if (!dialogStarted)

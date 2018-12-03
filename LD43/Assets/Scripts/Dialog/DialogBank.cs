@@ -37,6 +37,12 @@ public class DialogBank {
             case 6:
                 retBlock = princess();
                 break;
+            case 7:
+                retBlock = endgameBad();
+                break;
+            case 8:
+                retBlock = endgameGood();
+                break;
             case ERROR_CODE:
                 retBlock = new DBlock("something wrong happened.;.");
                 break;
@@ -160,6 +166,30 @@ public class DialogBank {
         dicoA.Add(MONO_DIALOG, new DBlock("Someone please help me !!", DBlock.DBLOCK_EFFECTS.FINISH_CINEMATIC));
 
         retBlock = new DBlock("Help meeeeeeee!.", dicoA);
+
+        return retBlock;
+    }
+
+    public static DBlock endgameBad()
+    {
+        DBlock retBlock = null;
+
+        Dictionary<string, DBlock> dicoA = new Dictionary<string, DBlock>();
+        dicoA.Add(MONO_DIALOG, new DBlock("Look at yourself! You're not a hero!"));
+
+        retBlock = new DBlock("You made it.. but at what cost?", dicoA);
+
+        return retBlock;
+    }
+
+    public static DBlock endgameGood()
+    {
+        DBlock retBlock = null;
+
+        Dictionary<string, DBlock> dicoA = new Dictionary<string, DBlock>();
+        dicoA.Add(MONO_DIALOG, new DBlock("I shall be yours as you prove your valor."));
+
+        retBlock = new DBlock("You're a valourous knight!", dicoA);
 
         return retBlock;
     }
