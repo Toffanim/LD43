@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerMovements : MonoBehaviour
 {
@@ -65,6 +66,26 @@ public class PlayerMovements : MonoBehaviour
         return (RayDown1 || RayDown2 || RayDown3);
     }
 
+    public RaycastHit2D GetGround()
+    {
+        RaycastHit2D RayDown1 = Physics2D.Raycast(
+                    new Vector2(transform.position.x, transform.position.y ),
+                       -Vector2.up);
+        RaycastHit2D RayDown2 = Physics2D.Raycast(
+            new Vector2(transform.position.x + (RayOffsetX ), transform.position.y ),
+               -Vector2.up);
+        RaycastHit2D RayDown3 = Physics2D.Raycast(
+            new Vector2(transform.position.x - (RayOffsetX ), transform.position.y ),
+               -Vector2.up);
+        if (Mathf.Abs(RayDown1.normal.x) > 0.1f)
+            return RayDown1;
+        if (Mathf.Abs(RayDown2.normal.x) > 0.1f)
+            return RayDown2;
+        if (Mathf.Abs(RayDown3.normal.x) > 0.1f)
+            return RayDown3;
+
+        return RayDown1;
+    }
     //Returns whether or not player is touching wall or ground.
     public bool IsTouchingSomething()
     {
@@ -75,10 +96,10 @@ public class PlayerMovements : MonoBehaviour
     public int wallDirection()
     {
         bool left = Physics2D.Raycast(
-            new Vector2(transform.position.x - RayOffsetX, transform.position.y),
+            new Vector2(transform.position.x , transform.position.y),
                -Vector2.right, RayLength);
         bool right = Physics2D.Raycast(
-            new Vector2(transform.position.x + RayOffsetX, transform.position.y),
+            new Vector2(transform.position.x , transform.position.y),
             Vector2.right, RayLength);
 
         if (left)
@@ -106,8 +127,43 @@ public class PlayerMovements : MonoBehaviour
         }
         if ((State.State == global::State.FULL_BODY) || (State.State == global::State.TWO_LEGS_ONE_ARM))
         {
-            RB2D.AddForce(new Vector2(((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * (IsGrounded() ? State.accel : State.airAccel),
-                                        0));
+            if (IsGrounded())
+            {
+                RaycastHit2D hit = GetGround();
+                if (hit.collider != null && Mathf.Abs(hit.normal.x) > 0.1f)
+                {
+                    Debug.Log("SLOPE");
+                    Vector2 Dir = new Vector2(((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * State.accel, 0);
+                    Dir.Normalize();
+                    Vector2 SlopeNormal = hit.normal;
+                    SlopeNormal.Normalize();
+
+                    if (Math.Sign(SlopeNormal.x) == Math.Sign(Controller.Inputs.X))
+                    {
+                        //Descente
+                        RB2D.AddForce(new Vector2(((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * (IsGrounded() ? State.accel : State.airAccel),
+                            0));
+                    }
+                    else
+                    {
+                        // Montée
+                        Vector2 FinalDir = (Dir + SlopeNormal) / Vector2.Distance(Dir, SlopeNormal);
+
+                        RB2D.AddForce(new Vector2(((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * (IsGrounded() ? State.accel : State.airAccel), 0));
+
+                        //RB2D.AddForce(new Vector2(((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * State.accel * FinalDir.x,
+                        //        ((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * State.accel * FinalDir.y));
+                        var slopeFriction = 1f;
+                        RB2D.velocity = new Vector2(RB2D.velocity.x - (hit.normal.x * slopeFriction), RB2D.velocity.y);
+                    }   
+                }
+                else
+                {
+                    Debug.Log("SLAPE");
+                    RB2D.AddForce(new Vector2(((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * (IsGrounded() ? State.accel : State.airAccel),
+                            0));
+                }
+            }
 
             var CanJump = IsGrounded()
                 || (!IsGrounded() && IsOnWall() && CanDoubleJump)
@@ -160,8 +216,43 @@ public class PlayerMovements : MonoBehaviour
         }
         else if ((State.State == global::State.TWO_ARMS) || (State.State == global::State.ONE_ARM) || (State.State == global::State.NO_LIMBS))
         {
-            RB2D.AddForce(new Vector2(((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * (IsGrounded() ? State.accel * 2 : State.airAccel),
-                                        0));
+            if (IsGrounded())
+            {
+                RaycastHit2D hit = GetGround();
+                if (hit.collider != null && Mathf.Abs(hit.normal.x) > 0.1f)
+                {
+                    Debug.Log("SLOPE");
+                    Vector2 Dir = new Vector2(((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * State.accel, 0);
+                    Dir.Normalize();
+                    Vector2 SlopeNormal = hit.normal;
+                    SlopeNormal.Normalize();
+
+                    if (Math.Sign(SlopeNormal.x) == Math.Sign(Controller.Inputs.X))
+                    {
+                        //Descente
+                        RB2D.AddForce(new Vector2(((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * (IsGrounded() ? State.accel : State.airAccel),
+                            0));
+                    }
+                    else
+                    {
+                        // Montée
+                        Vector2 FinalDir = (Dir + SlopeNormal) / Vector2.Distance(Dir, SlopeNormal);
+
+                        RB2D.AddForce(new Vector2(((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * (IsGrounded() ? State.accel : State.airAccel), 0));
+
+                        //RB2D.AddForce(new Vector2(((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * State.accel * FinalDir.x,
+                        //        ((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * State.accel * FinalDir.y));
+                        var slopeFriction = 1f;
+                        RB2D.velocity = new Vector2(RB2D.velocity.x - (hit.normal.x * slopeFriction), RB2D.velocity.y);
+                    }
+                }
+                else
+                {
+                    Debug.Log("SLAPE");
+                    RB2D.AddForce(new Vector2(((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * (IsGrounded() ? State.accel : State.airAccel),
+                            0));
+                }
+            }
 
             RB2D.velocity = new Vector2((Controller.Inputs.X == 0 && IsGrounded()) ? 0 : RB2D.velocity.x,
                                         (Controller.Inputs.Y == 1 && (IsTouchingSomething() || CanDoubleJump)) ? State.jump * 0.5f : RB2D.velocity.y);
