@@ -37,13 +37,13 @@ GameObject:
   m_Component:
   - component: {fileID: 4876355698398582}
   - component: {fileID: 212250487130495468}
-  - component: {fileID: 114477032847599578}
+  - component: {fileID: 114837237965191932}
   - component: {fileID: 58125197229335294}
   - component: {fileID: 50686238704614870}
   - component: {fileID: 114598154822086152}
   - component: {fileID: 70097530809478194}
   m_Layer: 0
-  m_Name: FlyingEnnemy 1
+  m_Name: Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -141,18 +141,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.0026401877}
   m_Size: {x: 0.5, y: 0.87854993}
   m_Direction: 0
---- !u!114 &114477032847599578
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1902377589953680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e09f520666e05841a9d726fc6459adb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayerDirection: {x: 0, y: 0}
 --- !u!114 &114598154822086152
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -168,6 +156,18 @@ MonoBehaviour:
   Speed: 10
   HP: 0
   CanBeDamaged: 1
+--- !u!114 &114837237965191932
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1902377589953680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4df36b47b6be5f542a650e26d92baf73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerDirection: {x: 0, y: 0}
 --- !u!114 &114991421372866664
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -217,7 +217,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: dfb099dfc8695ff4a8996eed07c82487, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
