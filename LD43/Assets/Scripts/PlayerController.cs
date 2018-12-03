@@ -151,8 +151,9 @@ public class PlayerController : MonoBehaviour
 
     public void teleportToLocation(Transform iTransform)
     {
-
+        //freezeMovements = true;
         gameObject.transform.position = iTransform.position;
+        //freezeMovements = false;
     }
 }
 
