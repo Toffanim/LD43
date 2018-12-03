@@ -81,12 +81,15 @@ public class PlayerState : MonoBehaviour {
 
     public void OnDamage(int Damage, int Knockback)
     {
-        IsDamaged = true;
-        EnnemyDamage = Damage;
-        EnnemyKnockback = Knockback;
+        if (State != State.CHAIR_BALL)
+        {
+            IsDamaged = true;
+            EnnemyDamage = Damage;
+            EnnemyKnockback = Knockback;
 
-        KnockbackCount = KnockbackLength;
-        HP -= Damage;
+            KnockbackCount = KnockbackLength;
+            HP -= Damage;
+        }
     }
 
     public bool mutilate(DBlock.DBLOCK_EFFECTS iBlockEffect)
