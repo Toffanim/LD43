@@ -15,6 +15,7 @@ public class EnnemySpawner : MonoBehaviour {
     void SpawnEnnemy()
     {
         GameObject Ennemy = GameObject.Instantiate(SpawnObject, transform.position, new Quaternion()) as GameObject;
+        Ennemy.GetComponent<CircleCollider2D>().radius = 10;
     }
 	
 	// Update is called once per frame

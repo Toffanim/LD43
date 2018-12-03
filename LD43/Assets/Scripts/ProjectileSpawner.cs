@@ -16,6 +16,8 @@ public class ProjectileSpawner : MonoBehaviour {
     {
         GameObject Ennemy = GameObject.Instantiate(SpawnObject, transform.position, new Quaternion()) as GameObject;
         var Dir = GameObject.Find("Player 1").transform.position - Ennemy.transform.position;
+        Ennemy.GetComponent<ProjectileBehavior>().PlayerDirection = Dir;
+
     }
 	
 	// Update is called once per frame

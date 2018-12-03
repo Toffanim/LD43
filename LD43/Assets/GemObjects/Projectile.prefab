@@ -153,9 +153,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsDamaged: 0
-  Speed: 10
+  Speed: 0.5
   HP: 0
-  CanBeDamaged: 1
+  CanBeDamaged: 0
 --- !u!114 &114837237965191932
 MonoBehaviour:
   m_ObjectHideFlags: 1

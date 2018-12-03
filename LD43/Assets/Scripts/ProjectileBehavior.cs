@@ -26,7 +26,13 @@ public class ProjectileBehavior : MonoBehaviour {
         {
             Player.GetComponent<PlayerState>().OnDamage(Damage, Knockback);
         }
-        Object.Destroy(gameObject);
+
+        if (collision.gameObject.GetComponent<EnnemyState>() == null)
+        {
+
+            Debug.Log(collision.gameObject.name);
+            Object.Destroy(gameObject);
+        }
     }
 
     // Update is called once per frame
@@ -37,6 +43,6 @@ public class ProjectileBehavior : MonoBehaviour {
     private void FixedUpdate()
     {
         var RB2D = GetComponent<Rigidbody2D>();
-        RB2D.velocity = (PlayerDirection * Speed);
+        RB2D.AddForce (PlayerDirection * Speed);
     }
 }
