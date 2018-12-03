@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
 
         if (npcInRange!=null)
         {
-            if ( Input.GetButtonDown("ChangeResponse")  && npcInRange.dialogStarted )
+            if (Input.GetButtonDown("Jump") && npcInRange.dialogStarted )
                 npcInRange.changeResponse();
             if (Input.GetButtonDown("Talk"))
                 npcInRange.dialog();
