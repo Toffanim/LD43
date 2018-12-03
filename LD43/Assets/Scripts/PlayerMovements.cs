@@ -164,6 +164,11 @@ public class PlayerMovements : MonoBehaviour
                             0));
                 }
             }
+            else
+            {
+                RB2D.AddForce(new Vector2(((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * (IsGrounded() ? State.accel : State.airAccel),
+        0));
+            }
 
             var CanJump = IsGrounded()
                 || (!IsGrounded() && IsOnWall() && CanDoubleJump)
