@@ -40,6 +40,6 @@ public class LaserBehavior : MonoBehaviour {
         var Dir = -T.up;
         var O = T.position;
         var Hit = Physics2D.Raycast(O, Dir);
-        T.localScale = new Vector3(gameObject.transform.localScale.x, Hit.distance+2, gameObject.transform.localScale.z);
+        T.localScale = new Vector3(gameObject.transform.localScale.x, Hit.distance*1.5f, gameObject.transform.localScale.z);
     }
 }
