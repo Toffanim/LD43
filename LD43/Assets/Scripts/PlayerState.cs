@@ -40,6 +40,7 @@ public class PlayerState : MonoBehaviour {
     public bool IsFacingRight = true;
 
     public int HP =  100;
+    public int MAX_HP = 100;
 
     public bool CanAttack = true;
     public bool IsDamaged;

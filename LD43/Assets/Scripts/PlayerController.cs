@@ -140,6 +140,15 @@ public class PlayerController : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    public void heal(int iAmount)
+    {
+        PlayerState ps = GetComponent<PlayerState>();
+        if (!!ps)
+            ps.HP = ( (ps.HP + iAmount) > ps.MAX_HP ) ? 
+                ps.MAX_HP : 
+                ps.HP + iAmount ;
+    }
+
     public void teleportToLocation(Transform iTransform)
     {
 
