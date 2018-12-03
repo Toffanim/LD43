@@ -62,7 +62,9 @@ public class PlayerState : MonoBehaviour {
 		if( HP <= 0 )
         {
             Debug.Log("PLEAYER DEAD");
-            Object.Destroy(gameObject);
+            PlayerController pc = GetComponent<PlayerController>();
+            if (!!pc)
+                pc.kill();
         }
 
         if (KnockbackCount <= 0)
