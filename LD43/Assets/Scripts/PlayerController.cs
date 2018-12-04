@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-
+        if (Input.GetKey("escape")) Application.Quit();
         if (npcInRange!=null)
         {
             if (Input.GetButtonDown("Jump") && npcInRange.dialogStarted )
