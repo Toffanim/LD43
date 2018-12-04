@@ -5,10 +5,11 @@ using UnityEngine;
 public class ProjectileSpawner : MonoBehaviour {
     public GameObject SpawnObject;
 
-    float CoolDown = 0.5f;
-    float CoolDownCount = 0;
-	// Use this for initialization
-	void Start () {
+    public float CoolDown = 0.5f;
+    public float CoolDownCount = 0;
+
+    // Use this for initialization
+    void Start () {
 		
 	}
 
@@ -22,11 +23,19 @@ public class ProjectileSpawner : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (CoolDownCount <= 0) {
-            SpawnEnnemy();
-            CoolDownCount = CoolDown;
-        }
+        BossBehavior bb = GetComponentInParent<BossBehavior>();
+        if (!!bb)
+        {
+            if (!!bb.activate)
+            {
+                if (CoolDownCount <= 0)
+                {
+                    SpawnEnnemy();
+                    CoolDownCount = CoolDown;
+                }
 
-        CoolDownCount -= Time.deltaTime;        
-	}
+                CoolDownCount -= Time.deltaTime;
+            }
+        }
+    }
 }
