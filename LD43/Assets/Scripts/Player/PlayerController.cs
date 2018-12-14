@@ -146,7 +146,6 @@ public class PlayerController : MonoBehaviour
 
     public void kill()
     {
-        Debug.Log("You've been killed !");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 

@@ -62,7 +62,6 @@ public class PlayerState : MonoBehaviour {
 	void Update () {
 		if( HP <= 0 )
         {
-            Debug.Log("PLEAYER DEAD");
             PlayerController pc = GetComponent<PlayerController>();
             if (!!pc)
                 pc.kill();
@@ -120,8 +119,6 @@ public class PlayerState : MonoBehaviour {
 
     private State processNewPlayerState()
     {
-        Debug.Log("processNewPlayerState");
-
         State retval = State;
         if ((n_arms == 2) && (n_legs == 2))
             retval = State.FULL_BODY;

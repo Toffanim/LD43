@@ -104,7 +104,6 @@ public class IntroEventController : Cinematic {
 
     void moveCameraToPrincess()
     {
-        Debug.Log("moveCameraToPrincess.....");
         Transform target = princessGO.transform;
         CinematicFollower CF = cameraGO.GetComponent<CinematicFollower>();
         if(!!CF)

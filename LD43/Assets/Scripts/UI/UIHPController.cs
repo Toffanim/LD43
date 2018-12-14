@@ -19,7 +19,7 @@ public class UIHPController : MonoBehaviour {
             PlayerState ps = trackedPlayer.GetComponent<PlayerState>();
             Text textComp = GetComponent<Text>();
             if (!!ps && !!textComp)
-            { int val = ps.HP; Debug.Log(val.ToString()); textComp.text = val.ToString(); }
+            { int val = ps.HP; textComp.text = val.ToString(); }
         }
 	}
 }

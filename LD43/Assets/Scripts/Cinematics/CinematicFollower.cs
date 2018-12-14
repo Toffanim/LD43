@@ -29,7 +29,6 @@ public class CinematicFollower : MonoBehaviour {
             Vector3 DesiredPosition;
             if (target)
             {
-                Debug.Log("MOVE CAMERA");
                 DesiredPosition = target.position;
                 Vector3 SmoothedPosition = Vector3.SmoothDamp(transform.position, DesiredPosition, ref Velocity, SmoothSpeed);
                 transform.position = new Vector3(SmoothedPosition.x, SmoothedPosition.y, transform.position.z);
