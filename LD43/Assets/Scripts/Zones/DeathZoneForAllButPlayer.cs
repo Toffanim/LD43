@@ -21,7 +21,7 @@ public class DeathZoneForAllButPlayer : MonoBehaviour
         PlayerController pc = other.GetComponent<PlayerController>();
         if (pc==null)
         {
-            Destroy(other.transform);
+            Destroy(other.gameObject);
         }
     }
 }
