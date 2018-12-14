@@ -16,7 +16,6 @@ public class MagicDoorController : MonoBehaviour {
 
     public void open()
     {
-        Debug.Log("OPEN:!");
         if (!!gameObject)
             Destroy(gameObject);
     }

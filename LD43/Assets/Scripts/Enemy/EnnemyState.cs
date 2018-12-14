@@ -57,7 +57,6 @@ public class EnnemyState : MonoBehaviour {
 
         if(HP <= 0)
         {
-            Debug.Log("ENNEMY DEAD");
             Object.Destroy(gameObject);
         }
 

@@ -77,7 +77,6 @@ public class PlayerController : MonoBehaviour
         if (!freezeMovements)
         {
             if (Input.GetButtonDown("Jump")) AskedForJump = true;
-            Debug.Log("AskedForJump : " + AskedForJump);
             Inputs.X = Input.GetAxis("Horizontal") >= 0 ? (float)Math.Ceiling(Input.GetAxis("Horizontal")) : (float)Math.Floor(Input.GetAxis("Horizontal"));
             if (State.AnimState != AnimState.JUMP) // Define in PlayerMovement FixedUpdate
             {

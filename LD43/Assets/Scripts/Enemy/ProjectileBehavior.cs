@@ -30,7 +30,6 @@ public class ProjectileBehavior : MonoBehaviour {
         if (collision.gameObject.GetComponent<EnnemyState>() == null)
         {
 
-            Debug.Log(collision.gameObject.name);
             Object.Destroy(gameObject);
         }
     }
