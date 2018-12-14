@@ -132,7 +132,6 @@ public class PlayerMovements : MonoBehaviour
                 RaycastHit2D hit = GetGround();
                 if (hit.collider != null && Mathf.Abs(hit.normal.x) > 0.1f)
                 {
-                    Debug.Log("SLOPE");
                     Vector2 Dir = new Vector2(((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * State.accel, 0);
                     Dir.Normalize();
                     Vector2 SlopeNormal = hit.normal;
@@ -159,7 +158,6 @@ public class PlayerMovements : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("SLAPE");
                     RB2D.AddForce(new Vector2(((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * (IsGrounded() ? State.accel : State.airAccel),
                             0));
                 }
@@ -226,7 +224,6 @@ public class PlayerMovements : MonoBehaviour
                 RaycastHit2D hit = GetGround();
                 if (hit.collider != null && Mathf.Abs(hit.normal.x) > 0.1f)
                 {
-                    Debug.Log("SLOPE");
                     Vector2 Dir = new Vector2(((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * State.accel, 0);
                     Dir.Normalize();
                     Vector2 SlopeNormal = hit.normal;
@@ -253,7 +250,6 @@ public class PlayerMovements : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("SLAPE");
                     RB2D.AddForce(new Vector2(((Controller.Inputs.X * State.Speed) - RB2D.velocity.x) * (IsGrounded() ? State.accel : State.airAccel),
                             0));
                 }

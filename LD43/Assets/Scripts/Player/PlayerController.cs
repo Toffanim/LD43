@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
     //PV ATTR
     public NPC npcInRange { get; set; }
 
+    private bool AskedForJump = false;
+
     // Use this for initialization
     void Start()
     {
@@ -74,6 +76,8 @@ public class PlayerController : MonoBehaviour
 
         if (!freezeMovements)
         {
+            if (Input.GetButtonDown("Jump")) AskedForJump = true;
+            Debug.Log("AskedForJump : " + AskedForJump);
             Inputs.X = Input.GetAxis("Horizontal") >= 0 ? (float)Math.Ceiling(Input.GetAxis("Horizontal")) : (float)Math.Floor(Input.GetAxis("Horizontal"));
             if (State.AnimState != AnimState.JUMP) // Define in PlayerMovement FixedUpdate
             {
@@ -108,7 +112,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                Inputs.Y = Input.GetButtonDown("Jump") ? 1 : 0;//(float)Math.Ceiling((double)Input.GetAxis("Vertical"));
+                // Inputs.Y = Input.GetButtonDown("Jump") ? 1 : 0;//(float)Math.Ceiling((double)Input.GetAxis("Vertical"));
             }
 
             if (Input.GetButtonDown("Attack") && State.CanAttack)
@@ -131,6 +135,12 @@ public class PlayerController : MonoBehaviour
             Rigidbody2D rb2d = GetComponent<Rigidbody2D>();
             if (!!rb2d)
                 rb2d.velocity = new Vector2(0,0);
+        }
+
+        if(AskedForJump)
+        {
+            Inputs.Y = 1;
+            AskedForJump = false;
         }
     }
 
