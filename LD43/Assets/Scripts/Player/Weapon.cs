@@ -20,6 +20,12 @@ public class Weapon : MonoBehaviour {
             var Dir = GetComponentInParent<PlayerState>().IsFacingRight ? 1 : -1;
             es.OnDamage( Damage, Dir * Knockback );
         }
+
+        BossBehavior bb = go.GetComponent<BossBehavior>();
+        if( bb )
+        {
+            bb.OnDamage(Damage);
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)

@@ -8,6 +8,8 @@ public class BossBehavior : MonoBehaviour
     public float acceleratedSpeed = 0.05f;
     public float basicSpeed = 0.01f;
 
+    public int HP = 1;
+
     public float distance_isFarFromPlayer = 100f;
     float offsetY = 0;
     GameObject Player;
@@ -32,6 +34,12 @@ public class BossBehavior : MonoBehaviour
 
             this.transform.position -= Dir * Speed;
         }
+    }
+
+    public void OnDamage(int Damage)
+    {
+        HP -= Damage;
+        if (HP <= 0) Destroy(gameObject);
     }
 
     bool updateSpeed()
