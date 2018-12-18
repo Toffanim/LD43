@@ -8,7 +8,7 @@ public class BossBehavior : MonoBehaviour
     public float acceleratedSpeed = 0.05f;
     public float basicSpeed = 0.01f;
 
-    public int HP = 1;
+    public int HP = 50;
 
     public float distance_isFarFromPlayer = 100f;
     float offsetY = 0;

@@ -22,7 +22,7 @@ public class Weapon : MonoBehaviour {
         }
 
         BossBehavior bb = go.GetComponent<BossBehavior>();
-        if( bb )
+        if( bb && !collision.isTrigger)
         {
             bb.OnDamage(Damage);
         }
