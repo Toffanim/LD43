@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// IMPORTANT (MTN5): Taken from Unity GameKit 2D
+
 public abstract class InputComponent : MonoBehaviour
 {
     public enum InputType

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// IMPORTANT (MTN5): Taken from Unity GameKit 2D
+
 public class PlayerInput : InputComponent {  //MonoBehavior through InputComponent
 
     public InputButton Pause = new InputButton(KeyCode.Escape, XboxControllerButtons.Menu);
