@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// IMPORTANT (MTN5): Taken from Unity GameKit 2D
+// IMPORTANT (MTN5): Taken/inspired from Unity GameKit 2D
 
 public class PlayerInput : InputComponent {  //MonoBehavior through InputComponent
 
