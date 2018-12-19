@@ -25,8 +25,7 @@ public class PawnController2D : MonoBehaviour
         if (Input.GetButtonDown("Attack")) _WantsAttack = true;
         // Accumulate horizontal movement
         _HorizontalMovement = Input.GetAxisRaw("Horizontal"); // NOTE (MTN5): Better to use Raw or Smoothed out?
-        if (_HorizontalMovement < 0 && _IsFacingRight) Flip();
-        if (_HorizontalMovement > 0 && !_IsFacingRight) Flip();
+
     }
 
     private void FixedUpdate()
