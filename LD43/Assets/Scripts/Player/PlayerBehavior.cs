@@ -24,6 +24,12 @@ public class PlayerBehavior : MonoBehaviour {
         Controller = GetComponent<CharacterController2D>();
     }
 
+    public void OnDamage(Damager D, Damageable DA)
+    {
+        ParticleSystem PS = GetComponentInChildren<ParticleSystem>();
+        PS.Play();
+    }
+
     void Update()
     {
         // Escape
