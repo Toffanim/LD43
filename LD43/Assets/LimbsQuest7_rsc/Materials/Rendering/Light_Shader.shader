@@ -41,7 +41,7 @@ Shader "Unlit/Light_Shader"
 			float4 _MainTex_ST;
 			float4 _WorldPosition;
 			float _Size;
-			float3 _Color; 
+			float4 _Color; 
 			
 			v2f vert (appdata v)
 			{
@@ -55,8 +55,8 @@ Shader "Unlit/Light_Shader"
 			fixed4 frag (v2f i) : SV_Target
 			{
 			    float dist = distance(i.worldPos, _WorldPosition);
-				float alpha = saturate( 1 - (dist - _Size)) / 3.f;
-				fixed4 col = fixed4(_Color, alpha);
+				float alpha = saturate( 1 - (dist - _Size)) * _Color.a;
+				fixed4 col = fixed4(_Color.xyz, alpha);
 				return col;
 			}
 			ENDCG
