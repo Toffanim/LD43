@@ -22,6 +22,9 @@ public class Damageable : MonoBehaviour {
     public DamageEvent OnDie;
     public int StartingHealth;
     public int CurrentHealth;
+    public bool InvincibleAfterDamage = true;
+    public float InvincibilityTime = 2f;
+    private float CurrentInvincibilityTime = 0f;
 
     // Use this for initialization
     void Start () {
@@ -30,7 +33,8 @@ public class Damageable : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        CurrentInvincibilityTime -= Time.deltaTime;
+        Mathf.Clamp(CurrentInvincibilityTime, -1, InvincibilityTime); // NOTE (MTN5) : Avoid underflow
 	}
 
     private void OnEnable()
@@ -40,11 +44,15 @@ public class Damageable : MonoBehaviour {
 
     public void TakeDamage(Damager Damager)
     {
-        CurrentHealth -= Damager.Damage;
-        OnDamage.Invoke(Damager, this);
-        if(CurrentHealth < 0)
+        if (CurrentInvincibilityTime <= 0)
         {
-            OnDie.Invoke(Damager, this);
+            CurrentHealth -= Damager.Damage;
+            OnDamage.Invoke(Damager, this);
+            if (CurrentHealth < 0)
+            {
+                OnDie.Invoke(Damager, this);
+            }
+            CurrentInvincibilityTime = InvincibilityTime;
         }
     }
 }
