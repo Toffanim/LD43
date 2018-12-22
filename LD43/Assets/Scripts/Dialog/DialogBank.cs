@@ -161,12 +161,19 @@ public class DialogBank {
     public static DBlock princess()
     {
         DBlock retBlock = null;
+        /*
+        Dictionary<string, DBlock> dicoB = new Dictionary<string, DBlock>();
+        dicoB.Add(MONO_DIALOG, new DBlock("", DBlock.DBLOCK_EFFECTS.NEXT_CINEMATIC_STEP));
 
         Dictionary<string, DBlock> dicoA = new Dictionary<string, DBlock>();
-        dicoA.Add(MONO_DIALOG, new DBlock("Someone please help me !!", DBlock.DBLOCK_EFFECTS.FINISH_CINEMATIC));
+        dicoA.Add(MONO_DIALOG, new DBlock("Someone please help me !!", DBlock.DBLOCK_EFFECTS.NEXT_CINEMATIC_STEP));
 
         retBlock = new DBlock("Help meeeeeeee!.", dicoA);
+        */
 
+        NPCDialogDico dico = new NPCDialogDico();
+        dico.addQBlock(new QBlock("Help meeeeeeee!"));
+        dico.addQBlock(new QBlock("Someone please help me !!", DBlock.DBLOCK_EFFECTS.NEXT_CINEMATIC_STEP));
         return retBlock;
     }
 

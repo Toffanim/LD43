@@ -1,63 +1,63 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
 public class DBlock {
-    public enum     DBLOCK_EFFECTS  { NOTHING, LOSE_ARM, LOSE_LEG, LOSE_BODY, FINISH_CINEMATIC};
 
-    // ATTRS
-    public string message;
-    public Dictionary<string, DBlock> responses;
-    public string rootKey; //responseKey
+    public enum     DBLOCK_EFFECTS  { NOTHING, LOSE_ARM, LOSE_LEG, LOSE_BODY, NEXT_CINEMATIC_STEP};
     public DBLOCK_EFFECTS blockEffect { get; set; }
+    public string predecessor;
+    public List<string> successors;
 
+    // CTORS
     public DBlock(string iMessage, DBLOCK_EFFECTS iBlockEffect)
     {
-        message = iMessage;
-        rootKey = DialogBank.MONO_DIALOG;
+        predecessor = iMessage;
+        successors = new List<string>();
         blockEffect = iBlockEffect;
     }
 
     public DBlock(string iMessage)
     {
-        message = iMessage;
-        rootKey = DialogBank.MONO_DIALOG;
+        predecessor = iMessage;
+        successors = new List<string>();
         blockEffect = DBLOCK_EFFECTS.NOTHING;
     }
 
-    public DBlock(string iMessage, string iRootKey)
+    public DBlock(string iQuestion, string iAnswer)
     {
-        message = iMessage;
-        rootKey = iRootKey;
+        predecessor = iQuestion;
+        successors = new List<string>();
+        successors.Add(iAnswer);
         blockEffect = DBLOCK_EFFECTS.NOTHING;
     }
 
-    public DBlock(string iMessage, string iRootKey, DBLOCK_EFFECTS iBlockEffect)
+    public DBlock(string iQuestion, string iAnswer, DBLOCK_EFFECTS iBlockEffect)
     {
-        message = iMessage;
-        rootKey = iRootKey;
+        predecessor = iQuestion;
+        successors = new List<string>();
+        successors.Add(iAnswer);
         blockEffect = iBlockEffect;
     }
 
+    public DBlock(string iQuestion, List<string> iResponses)
+    {
+        predecessor = iQuestion;
+        successors = iResponses;
+        blockEffect = DBLOCK_EFFECTS.NOTHING;
+    }
+
+    public DBlock(string iQuestion, List<string> iResponses, DBLOCK_EFFECTS iBlockEffect)
+    {
+        predecessor = iQuestion;
+        successors = iResponses;
+        blockEffect = iBlockEffect;
+    }
+
+    // VIRTUAL
+    public virtual string getMessage() { return predecessor; }
+
+    // UTILS
     public bool isFinalBlock()
     {
-        return ( (responses == null)||(responses.Count==0) );
+        return ((successors == null) || (successors.Count == 0));
     }
-
-    public DBlock(string iMessage, Dictionary<string, DBlock> iResponses)
-    {
-        message = iMessage;
-        rootKey = DialogBank.MONO_DIALOG;
-        responses = iResponses;
-        blockEffect = DBLOCK_EFFECTS.NOTHING;
-    }
-
-    public DBlock(string iMessage, Dictionary<string, DBlock> iResponses, string iRootKey)
-    {
-        message = iMessage;
-        responses = iResponses;
-        rootKey = iRootKey;
-        blockEffect = DBLOCK_EFFECTS.NOTHING;
-    }
-
 }

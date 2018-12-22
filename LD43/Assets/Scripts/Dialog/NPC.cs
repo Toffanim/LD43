@@ -93,16 +93,7 @@ public class NPC : MonoBehaviour {
         //RESOLVE EFFECT OF THE NEW MESSAGE
         if (!!capturedPlayerControlled)
         {
-            // CHECK FOR CINEMATIC END
-            if (npcDialog.getBlockEffect() == DBlock.DBLOCK_EFFECTS.FINISH_CINEMATIC)
-            {
-                Cinematic c = GetComponent<Cinematic>();
-                if (!!c)
-                {
-                    Debug.Log("NEXT CINEMATIC STAGE");
-                    c.currentCinematicStage++;
-                }
-            }
+
 
             // MUTILATE PLAYER
             PlayerState ps = capturedPlayerControlled.GetComponent<PlayerState>();
@@ -115,6 +106,18 @@ public class NPC : MonoBehaviour {
                     if (!!mgc)
                     { mgc.open(); disappear(); }
 
+                }
+            }
+
+            // CHECK FOR CINEMATIC END
+            if (npcDialog.getBlockEffect() == DBlock.DBLOCK_EFFECTS.NEXT_CINEMATIC_STEP)
+            {
+                Cinematic c = GetComponent<Cinematic>();
+                if (!!c)
+                {
+                    Debug.Log("NEXT CINEMATIC STAGE");
+                    c.currentCinematicStage++;
+                    c.playCinematic();
                 }
             }
         }
