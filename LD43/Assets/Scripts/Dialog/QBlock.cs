@@ -13,23 +13,7 @@ public class QBlock : DBlock {
     {
     }
 
-    public QBlock(string iQuestion, string iAnswer) : base(iQuestion, iAnswer)
-    {
-    }
-
-    public QBlock(string iQuestion, List<string> iResponses) : base(iQuestion, iResponses)
-    {
-    }
-
-    public QBlock(string iQuestion, string iAnswer, DBLOCK_EFFECTS iBlockEffect) : base(iQuestion, iAnswer, iBlockEffect)
-    {
-    }
-
-    public QBlock(string iQuestion, List<string> iResponses, DBLOCK_EFFECTS iBlockEffect) : base(iQuestion, iResponses, iBlockEffect)
-    {
-    }
-
-    public override string getMessage() { return predecessor; }
+    public override string getMessage() { return message; }
 
     // UNITY
     // Use this for initialization

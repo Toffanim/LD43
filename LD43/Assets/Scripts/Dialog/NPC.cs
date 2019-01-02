@@ -88,18 +88,16 @@ public class NPC : MonoBehaviour {
             }
         }
         if (npcDialog!=null && uiDialogController!=null)
-            uiDialogController.response = npcDialog.getResponseKey();
+            uiDialogController.response = npcDialog.getSelectedAnswer();
 
         //RESOLVE EFFECT OF THE NEW MESSAGE
         if (!!capturedPlayerControlled)
         {
-
-
             // MUTILATE PLAYER
             PlayerState ps = capturedPlayerControlled.GetComponent<PlayerState>();
             if (!!ps)
             {
-                bool playerMutilated = ps.mutilate(npcDialog.getBlockEffect());
+                bool playerMutilated = ps.mutilate(npcDialog.getQuestionBlockEffect());
                 if (!!guardedDoor && !!playerMutilated)
                 {
                     MagicDoorController mgc = guardedDoor.GetComponent<MagicDoorController>();
@@ -110,7 +108,7 @@ public class NPC : MonoBehaviour {
             }
 
             // CHECK FOR CINEMATIC END
-            if (npcDialog.getBlockEffect() == DBlock.DBLOCK_EFFECTS.NEXT_CINEMATIC_STEP)
+            if (npcDialog.getQuestionBlockEffect() == DBlock.DBLOCK_EFFECTS.NEXT_CINEMATIC_STEP)
             {
                 Cinematic c = GetComponent<Cinematic>();
                 if (!!c)
@@ -128,7 +126,7 @@ public class NPC : MonoBehaviour {
     {
         if (npcDialog!=null)
             npcDialog.changeResponse();
-        uiDialogController.response = npcDialog.getResponseKey();
+        uiDialogController.response = npcDialog.getSelectedAnswer();
     }
 
     public void exitDialog()
