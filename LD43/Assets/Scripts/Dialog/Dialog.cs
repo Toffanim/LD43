@@ -5,87 +5,77 @@ using System.Linq;
 
 public class Dialog
 {
-
     // ATTRS
-    private List<DBlock> dialogResponses{ get; set; }
-    private int currentResponseIndex { get; set; }
+    public NPCDialogDico npcDialogDico { get; set; }
+    public DialogCell activeDCell { get; set; }
 
-    public  DBlock       dialogChainCurrentElem { get; set; }
-    public  DBlock       responseCurrentElem { get; set; }
-
-
-    public DBlock       dialogChainRoot { get; set; }
-
-    public Dialog(int iRoot)
+    public Dialog(int iDialogID)
     {
-        currentResponseIndex = 0;
-        dialogChainRoot = DialogBank.getDialogStartFromId(iRoot);
-        if (dialogChainRoot!=null)
-        {
-            dialogChainCurrentElem = dialogChainRoot;
-            //dialogResponses = new List<DBlock>();
-            //fillResponses();
-        }
+        npcDialogDico = DialogBank.getDialogFromID(iDialogID);
+        if (null == npcDialogDico)
+            Debug.Log("wtf ? " + iDialogID );
+        activeDCell = npcDialogDico.startingCell;
     }
 
     public void changeResponse()
     {
-        currentResponseIndex++;
-        if ( currentResponseIndex >= dialogChainCurrentElem.responses.Count)
-            currentResponseIndex = 0;
+        activeDCell.changeActiveAnswer();
     }
 
     public void resetDialog()
     {
-        dialogChainCurrentElem = dialogChainRoot;
+        activeDCell = npcDialogDico.startingCell;
     }
 
     public string getMessage()
     {
-        string s = dialogChainCurrentElem.message;
+
+        string s = (activeDCell != null) ? activeDCell.question.getMessage() : "no active dialog cell";
         return (s!=null)?s:"not found";
     }
 
-    public string getResponse()
+    public string getSelectedAnswer()
     {
-        string s = dialogChainCurrentElem.responses.Values.ElementAt(currentResponseIndex).message;
-        return (s != null) ? s : "not found";
+        ABlock answer = activeDCell.getSelectedAnswer();
+        if (answer != null)
+        {
+            string s = answer.getMessage();
+            return (s != null) ? s : "not found";
+        }
+        return "no answer found";
     }
 
-    public string getResponseKey()
+    public DBlock.DBLOCK_EFFECTS getQuestionBlockEffect()
     {
-        string s = (dialogChainCurrentElem.isFinalBlock()) ?
-         DialogBank.MONO_DIALOG : 
-         dialogChainCurrentElem.responses.Values.ElementAt(currentResponseIndex).rootKey;
-        Debug.Log("ID : " + currentResponseIndex + "  msg : " + s);
-        return (s != null) ? s : "not found";
+        return activeDCell.question.blockEffect;
+    }
+    public DBlock.DBLOCK_EFFECTS getResponseBlockEffect()
+    {
+        return activeDCell.selectedAnswer.blockEffect;
     }
 
-    public DBlock.DBLOCK_EFFECTS getBlockEffect()
-    {
-        return dialogChainCurrentElem.blockEffect;
-    }
 
-    public Dictionary<string, DBlock> getChoices()
-    { return dialogChainCurrentElem.responses; }
+    public List<string> getChoices()
+    {
+        List<string> choices = new List<string>();
+        foreach (ABlock answer in activeDCell.answers)
+            choices.Add(answer.getMessage());
+        return choices;
+    }
 	
     public bool tryPursueDialog()
     {
-        if (dialogChainCurrentElem.isFinalBlock())
-            return false;
-        if (dialogChainCurrentElem.responses.Count==0)
-            return false;
-        if (dialogChainCurrentElem.responses.Count == 1)
+        bool rc = true;
+        if (activeDCell == null)
+            rc = false;
+        else if (activeDCell.isFinalBlock())
+            rc = false;
+        else 
         {
-            dialogChainCurrentElem = ((DBlock)dialogChainCurrentElem.responses[DialogBank.MONO_DIALOG]);
-            return true;
+            DialogCell cellCopy = activeDCell;
+            activeDCell = npcDialogDico.getNextDialogCellFromCurrentDCell(cellCopy);
+            rc = (activeDCell != null);
         }
-        else if (dialogChainCurrentElem.responses.Count > 1)
-        {
-            string response_key = dialogChainCurrentElem.responses.Values.ElementAt(currentResponseIndex).rootKey;
-            dialogChainCurrentElem = ((DBlock)dialogChainCurrentElem.responses[response_key]);
-            return true;
-        }
-        return true;
+        return rc;
     }
 }

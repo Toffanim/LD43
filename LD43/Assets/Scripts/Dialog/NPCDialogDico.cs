@@ -4,51 +4,81 @@ using UnityEngine;
 
 public class NPCDialogDico : MonoBehaviour {
 
-    public List<QBlock> questions;
-    private List<ABlock> answers;
+    public DialogCell startingCell { get; set; }
+    public List<DialogCell> loadedCells { get; set; }
 
-    // PU METHODS
-    public DBlock getNextDBlock( string iAnswer)
+
+    //CTOR 
+    public NPCDialogDico()
     {
-        DBlock retblock = null;
-
-        // Get corresponding ABlock
-        ABlock answerBlock = null;
-        foreach (ABlock a in answers)
-            if (a.getMessage() == iAnswer)
-            { answerBlock = a; break; }
-
-        // Retrieve associated QBlock
-        string wantedQuestion = answerBlock.getRelatedQuestion();
-        foreach (QBlock q in questions)
-            if ( q.getMessage() == wantedQuestion )
-                { retblock = q; break; }
-
-        return retblock;
+        loadedCells = new List<DialogCell>();
     }
 
-
-    // MANAGE DICO
-    public void addQBlock( QBlock iBlock)
+    public void addDialogCell(DialogCell iDCell)
     {
-        if (questions == null)
-            questions = new List<QBlock>();
-        questions.Add(iBlock);
+        if (loadedCells == null)
+            loadedCells = new List<DialogCell>();
+        loadedCells.Add(iDCell);
     }
-    public void buildAnswers()
+
+    public void setStartingCellFromID(string iDCellID)
     {
-        foreach(QBlock question in questions)
+        if (loadedCells!=null)
         {
-            foreach (string answer in question.successors)
-                answers.Add(new ABlock(answer, question.getMessage()));
+            foreach (DialogCell dcell in loadedCells)
+                if (dcell.getID() == iDCellID)
+                    startingCell = dcell;
         }
+    }
+
+    public DialogCell getNextDialogCellFromCurrentDCell(DialogCell iDialogCell )
+    {
+        DialogCell nextCell = null;
+
+        if (!!iDialogCell)
+        {
+            ABlock selectedAnswer = iDialogCell.selectedAnswer;
+            string defaultSuccessorID = iDialogCell.defaultSuccessorID;
+            string answerSuccessorID = ( selectedAnswer!=null ) ? selectedAnswer.successor_dcell_ID : "";
+            string successorID = (answerSuccessorID.Length > 0) ? answerSuccessorID : defaultSuccessorID;
+
+            Debug.Log(" SUCCESSOR ID " + successorID);
+
+            if (successorID.Length <= 0) return null;
+
+            foreach (DialogCell dcell in loadedCells )
+            {    
+                if ( dcell.getID() == successorID)
+                {
+                    nextCell = dcell;
+                    break;
+                }
+            }//! foreach activeAnswer
+           
+        }
+        return nextCell;
+    }
+
+    // CALL IT TO FILL UP GAPS IN GIVEN DCELLS 
+    public void finishDicoCreation()
+    {
+        if (loadedCells == null)
+            return;
+        foreach( DialogCell dcell in loadedCells )
+        {
+            if ((dcell.answers == null) || (dcell.answers.Count==0))
+            {
+                dcell.answers = new List<ABlock>(1);
+                dcell.answers.Add(new ABlock());
+            }
+        }//!foreach dcell
     }
 
     // UNITY
     void Start () {
-        questions   = new List<QBlock>();
-        answers     = new List<ABlock>();
+        loadedCells = new List<DialogCell>();
     }
+
 	void Update () {
 		
 	}

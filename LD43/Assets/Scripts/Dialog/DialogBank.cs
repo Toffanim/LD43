@@ -2,59 +2,55 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DialogBank {
-
-    public static Dictionary<string, DBlock> RESPONSE_DICO =
-        new Dictionary<string, DBlock>
-    {
-        {"OK, Let's do this !", new DBlock("You made the right decision my friend!") },
-        {"No way I'm doing it.", new DBlock("As you wish...") }
-    };
+public class DialogBank : MonoBehaviour {
 
     public const int ERROR_CODE = -1;
     public const string MONO_DIALOG = "...";
 
-    public static DBlock getDialogStartFromId(int iID)
+    public static NPCDialogDico getDialogFromID(int iID)
     {
-        DBlock retBlock = null;
+        NPCDialogDico retDialog = null;
         switch (iID)
         {
             case 1:
-                retBlock = wizard1();
+                retDialog = wizard1();
                 break;
             case 2:
-                retBlock = wizard2();
+                retDialog = wizard2();
                 break;
             case 3:
-                retBlock = wizard3();
+                retDialog = wizard3();
                 break;
             case 4:
-                retBlock = wizard4();
+                retDialog = wizard4();
                 break;
             case 5:
-                retBlock = wizard5();
+                retDialog = wizard5();
                 break;
             case 6:
-                retBlock = princess();
+                retDialog = princess();
                 break;
             case 7:
-                retBlock = endgameBad();
+                retDialog = endgameBad();
                 break;
             case 8:
-                retBlock = endgameGood();
+                retDialog = endgameGood();
                 break;
             case ERROR_CODE:
-                retBlock = new DBlock("something wrong happened.;.");
+                retDialog = getErrorBlock();
                 break;
             default:
-                retBlock = new DBlock("BLOCK NOT FOUND FOR ID ");
+                retDialog = getDialogNotFound();
                 break;
         }
-        return retBlock;
+        if (retDialog != null)
+            Debug.Log("RET DBANK from ID" + iID);
+        return retDialog;
     }
 
-    public static DBlock wizard1()
+    public static NPCDialogDico wizard1()
     {
+        /*
         DBlock retBlock = null;
         Dictionary<string, DBlock> dicoA = new Dictionary<string, DBlock>();
         DBlock choiceA = new DBlock("You made the right decision my friend!", "OK, Let's do this !", DBlock.DBLOCK_EFFECTS.LOSE_ARM);
@@ -71,11 +67,14 @@ public class DialogBank {
         retBlock = new DBlock("Wizard1 : Good morning sir.", dicoC);
 
         return retBlock;
+        */
+        return null;
 
     }
 
-    public static DBlock wizard2()
+    public static NPCDialogDico wizard2()
     {
+        /*
         DBlock retBlock = null;
         Dictionary<string, DBlock> dicoA = new Dictionary<string, DBlock>();
         DBlock choiceA = new DBlock("You made the right decision my friend!", "OK, Let's do this !", DBlock.DBLOCK_EFFECTS.LOSE_LEG);
@@ -92,11 +91,13 @@ public class DialogBank {
         retBlock = new DBlock("Wizard2 : Good morning sir.", dicoC);
 
         return retBlock;
-
+        */
+        return null;
     }
 
-    public static DBlock wizard3()
+    public static NPCDialogDico wizard3()
     {
+        /*
         DBlock retBlock = null;
         Dictionary<string, DBlock> dicoA = new Dictionary<string, DBlock>();
         DBlock choiceA = new DBlock("You made the right decision my friend!", "OK, Let's do this !", DBlock.DBLOCK_EFFECTS.LOSE_LEG);
@@ -113,11 +114,13 @@ public class DialogBank {
         retBlock = new DBlock("Wizard3 : Good morning sir.", dicoC);
 
         return retBlock;
-
+        */
+        return null;
     }
 
-    public static DBlock wizard4()
+    public static NPCDialogDico wizard4()
     {
+        /*
         DBlock retBlock = null;
         Dictionary<string, DBlock> dicoA = new Dictionary<string, DBlock>();
         DBlock choiceA = new DBlock("You made the right decision my friend!", "OK, Let's do this !", DBlock.DBLOCK_EFFECTS.LOSE_ARM);
@@ -134,11 +137,13 @@ public class DialogBank {
         retBlock = new DBlock("Wizard4 : Good morning sir.", dicoC);
 
         return retBlock;
-
+        */
+        return null;
     }
 
-    public static DBlock wizard5()
+    public static NPCDialogDico wizard5()
     {
+        /*
         DBlock retBlock = null;
         Dictionary<string, DBlock> dicoA = new Dictionary<string, DBlock>();
         DBlock choiceA = new DBlock("You made the right decision my friend!", "OK, Let's do this !", DBlock.DBLOCK_EFFECTS.LOSE_BODY);
@@ -155,30 +160,42 @@ public class DialogBank {
         retBlock = new DBlock("Wizard4 : Good morning sir.", dicoC);
 
         return retBlock;
-
-    }
-
-    public static DBlock princess()
-    {
-        DBlock retBlock = null;
-        /*
-        Dictionary<string, DBlock> dicoB = new Dictionary<string, DBlock>();
-        dicoB.Add(MONO_DIALOG, new DBlock("", DBlock.DBLOCK_EFFECTS.NEXT_CINEMATIC_STEP));
-
-        Dictionary<string, DBlock> dicoA = new Dictionary<string, DBlock>();
-        dicoA.Add(MONO_DIALOG, new DBlock("Someone please help me !!", DBlock.DBLOCK_EFFECTS.NEXT_CINEMATIC_STEP));
-
-        retBlock = new DBlock("Help meeeeeeee!.", dicoA);
         */
-
-        NPCDialogDico dico = new NPCDialogDico();
-        dico.addQBlock(new QBlock("Help meeeeeeee!"));
-        dico.addQBlock(new QBlock("Someone please help me !!", DBlock.DBLOCK_EFFECTS.NEXT_CINEMATIC_STEP));
-        return retBlock;
+        return null;
     }
 
-    public static DBlock endgameBad()
+    public static NPCDialogDico princess()
     {
+        NPCDialogDico dico = new NPCDialogDico();
+
+        // CREATE CELLS
+        QBlock q0 = new QBlock("Help meeeeeeee!");
+        DialogCell cell0 = new DialogCell(q0);
+        dico.addDialogCell(cell0);
+
+        QBlock q1 = new QBlock("Someone please help me !!", DBlock.DBLOCK_EFFECTS.NEXT_CINEMATIC_STEP);
+        DialogCell cell1 = new DialogCell(q1);
+        dico.addDialogCell(cell1);
+
+        // UPDATE LINKS
+        cell0.defaultSuccessorID = cell1.getID();
+
+        // SET STARTING CELL
+        dico.setStartingCellFromID(cell0.getID());
+
+        // 
+        dico.finishDicoCreation();
+
+        if (dico != null) // TODO WE HAVE A NULL DICO ROFLMAOOOOOOOOOOOOOOOOO
+            Debug.Log("NOT NULL FOR FUCK SAKE");
+        else Debug.Log("...");
+
+        return dico;
+    }
+
+    public static NPCDialogDico endgameBad()
+    {
+        /*
         DBlock retBlock = null;
 
         Dictionary<string, DBlock> dicoA = new Dictionary<string, DBlock>();
@@ -187,10 +204,13 @@ public class DialogBank {
         retBlock = new DBlock("You made it.. but at what cost?", dicoA);
 
         return retBlock;
+        */
+        return null;
     }
 
-    public static DBlock endgameGood()
+    public static NPCDialogDico endgameGood()
     {
+        /*
         DBlock retBlock = null;
 
         Dictionary<string, DBlock> dicoA = new Dictionary<string, DBlock>();
@@ -199,11 +219,25 @@ public class DialogBank {
         retBlock = new DBlock("You're a valourous knight!", dicoA);
 
         return retBlock;
+        */
+        return null;
     }
 
-    public static DBlock getErrorBlock()
+    public static NPCDialogDico getErrorBlock()
     {
-        DBlock retval = DialogBank.getDialogStartFromId(ERROR_CODE);
+        /*
+        DBlock retval = DialogBank.getDialogFromID(ERROR_CODE);
         return retval;
+        */
+        return null;
+    }
+
+    public static NPCDialogDico getDialogNotFound()
+    {
+        /*
+        DBlock retval = DialogBank.getDialogFromID(ERROR_CODE);
+        return retval;
+        */
+        return null;
     }
 }

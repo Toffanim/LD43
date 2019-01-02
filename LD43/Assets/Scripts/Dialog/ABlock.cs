@@ -5,8 +5,15 @@ using UnityEngine;
 public class ABlock : DBlock {
 
     private const string DEFAULT_MUTE_DIALOG = "...";
+    public string successor_dcell_ID;
+
 
     // CTORS
+    public ABlock() : base("")
+    {
+
+    }
+
     public ABlock(string iMessage) : base(iMessage)
     {
     }
@@ -15,42 +22,26 @@ public class ABlock : DBlock {
     {
     }
 
-    public ABlock(string iQuestion, string iAnswer) : base(iQuestion, iAnswer)
+    public ABlock(string iMessage, string iSuccessorDCellID) : base(iMessage)
     {
+        successor_dcell_ID = iSuccessorDCellID;
     }
 
-    public ABlock(string iQuestion, List<string> iResponses) : base(iQuestion, iResponses)
+    public ABlock(string iMessage, DBLOCK_EFFECTS iBlockEffect, string iSuccessorDCellID) : base(iMessage, iBlockEffect)
     {
-    }
-
-    public ABlock(string iQuestion, string iAnswer, DBLOCK_EFFECTS iBlockEffect) : base(iQuestion, iAnswer, iBlockEffect)
-    {
-    }
-
-    public ABlock(string iQuestion, List<string> iResponses, DBLOCK_EFFECTS iBlockEffect) : base(iQuestion, iResponses, iBlockEffect)
-    {
-    }
-
-    // PU METHODS
-    public string getRelatedQuestion()
-    {
-        if ((successors != null) && (successors.Count > 0))
-            return successors[0];
-        return "";
-    }
-
-    public string getRelatedQuestion(int iIndex)
-    {
-        if ( (successors != null) && (successors.Count > 0) && (successors.Count < iIndex) )
-            return successors[iIndex];
-        return "";
+        successor_dcell_ID = iSuccessorDCellID;
     }
 
     public override string getMessage()
     {
-        if (predecessor.Length == 0)
+        if (message.Length == 0)
             return DEFAULT_MUTE_DIALOG;
-        return predecessor;
+        return message;
+    }
+
+    public string getDialogCellIDSuccessor()
+    {
+        return successor_dcell_ID;
     }
 
     // Use this for initialization
