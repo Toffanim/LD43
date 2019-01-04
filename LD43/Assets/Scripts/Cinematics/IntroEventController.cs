@@ -17,19 +17,19 @@ public class IntroEventController : Cinematic {
 
     }
 
-    public override void playCinematic()
+    public override void play()
     {
         // [..]
-        if (currentCinematicStage == 0)
+        if (currentCinematicStage == 1)
         {
             moveCameraToPrincess();
 
-            // TALK TO PRINCESS
+            // AUTOTALK TO PRINCESS
             NPC talkative = GetComponent<NPC>();
             if (!!talkative)
                 talkative.dialog();
         }
-        if (currentCinematicStage >= 2)
+        if (currentCinematicStage >= 3)
         {
             quitCinematic();
             Destroy(gameObject);

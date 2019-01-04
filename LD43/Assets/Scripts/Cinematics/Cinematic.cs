@@ -19,9 +19,11 @@ public class Cinematic : MonoBehaviour {
     public int currentCinematicStage { get; set; }
 
     // VIRTUAL
-    public virtual void playCinematic() { }
+    public virtual void play() { }
 
     // GENERIC
+    public void playCinematic() { currentCinematicStage++; play(); }
+
     public void launchCinematic()
     {
         // GET
@@ -84,5 +86,12 @@ public class Cinematic : MonoBehaviour {
         PlayerController pc = other.GetComponent<PlayerController>();
         if (!!pc && cinematicMustBePlayed)
         { cinematicIsPlaying = true; launchCinematic(); }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        PlayerController pc = other.GetComponent<PlayerController>();
+        if (!!pc && cinematicMustBePlayed)
+        { cinematicIsPlaying = false; quitCinematic(); }
     }
 }

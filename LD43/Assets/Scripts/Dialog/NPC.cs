@@ -12,7 +12,7 @@ public class NPC : MonoBehaviour {
     public GameObject relatedCinematic;
 
     // INTERNAL
-    public Dialog npcDialog { get; set; }
+    public DialogController dialogController { get; set; }
     bool inRangeOfPlayer;
     public bool dialogStarted = false;
 
@@ -23,7 +23,11 @@ public class NPC : MonoBehaviour {
     public NPC( int iDialogRootId)
     {
         dialogID = iDialogRootId;
-        npcDialog = new Dialog(dialogID);
+        //npcDialog = new DialogController(dialogID);
+        gameObject.AddComponent<DialogController>();
+        dialogController = GetComponent<DialogController>();
+        dialogController.init(iDialogRootId);
+
         if (!!dialogUI)
             uiDialogController = dialogUI.GetComponentInChildren<UIDialogController>(true);
 
@@ -33,7 +37,11 @@ public class NPC : MonoBehaviour {
     void Start()
     {
         inRangeOfPlayer = false;
-        npcDialog = new Dialog(dialogID);
+
+        gameObject.AddComponent<DialogController>();
+        dialogController = GetComponent<DialogController>();
+        dialogController.init(dialogID);
+
         if (!!dialogUI)
         { 
             uiDialogController = dialogUI.GetComponentInChildren<UIDialogController>(true);
@@ -49,55 +57,61 @@ public class NPC : MonoBehaviour {
     public void loadNewDialog(int iNewDialogID)
     {
         dialogID = iNewDialogID;
-        npcDialog = new Dialog(dialogID);
+        dialogController = new DialogController(dialogID);
     }
 
     public void dialog()
     {
-        if (!dialogStarted)
+        //RESOLVE EFFECT OF THE NEW MESSAGE
+        if (!!capturedPlayerControlled && inRangeOfPlayer)
         {
-            if (npcDialog != null)
+            bool tryDialog = false;
+            if (!dialogStarted)
             {
-                uiDialogController = dialogUI.GetComponentInChildren<UIDialogController>(true);
-                string newMessage = npcDialog.getMessage();
-                if ((newMessage != null)&& (uiDialogController != null))
+                if (dialogController != null)
                 {
-                    uiDialogController.message = newMessage;
-                    if (!!uiDialogController)
-                        uiDialogController.show(true);
-                    dialogStarted = true;
-                }
-            }
-        }
-        else
-        {
-            if (npcDialog != null)
-            {
-                bool tryDialog = npcDialog.tryPursueDialog();
-                if (!tryDialog)
-                    exitDialog(); 
-                else // PURSUE DIALOG
-                {
-                    string newMessage = npcDialog.getMessage();
-                    if ((newMessage != null) && (uiDialogController != null))
+                    uiDialogController = dialogUI.GetComponentInChildren<UIDialogController>(true);
+                    string newMessage = dialogController.getMessage();
+                    if ((newMessage != null)&& (uiDialogController != null))
                     {
                         uiDialogController.message = newMessage;
+                        if (!!uiDialogController)
+                            uiDialogController.show(true);
+                        dialogStarted = true;
+                        tryDialog = true;
                     }
-                    
                 }
             }
-        }
-        if (npcDialog!=null && uiDialogController!=null)
-            uiDialogController.response = npcDialog.getSelectedAnswer();
+            else
+            {
+                if (dialogController != null)
+                {
+                    tryDialog = dialogController.tryPursueDialog();
+                    if (!tryDialog)
+                        exitDialog(); 
+                    else // PURSUE DIALOG
+                    {
+                        string newMessage = dialogController.getMessage();
+                        if ((newMessage != null) && (uiDialogController != null))
+                        {
+                            uiDialogController.message = newMessage;
+                        }
+                    
+                    }
+                }
+            }
+            if (dialogController!=null && uiDialogController!=null)
+                uiDialogController.response = dialogController.getSelectedAnswer();
 
-        //RESOLVE EFFECT OF THE NEW MESSAGE
-        if (!!capturedPlayerControlled)
-        {
             // MUTILATE PLAYER
             PlayerState ps = capturedPlayerControlled.GetComponent<PlayerState>();
-            if (!!ps)
+            if (!!ps && tryDialog)
             {
-                bool playerMutilated = ps.mutilate(npcDialog.getQuestionBlockEffect());
+                DBlock.DBLOCK_EFFECTS q_effect = dialogController.getQuestionBlockEffect();
+                DBlock.DBLOCK_EFFECTS a_effect = dialogController.getResponseBlockEffect();
+
+                bool playerMutilated = ps.mutilate(q_effect) || ps.mutilate(a_effect) ;
+
                 if (!!guardedDoor && !!playerMutilated)
                 {
                     MagicDoorController mgc = guardedDoor.GetComponent<MagicDoorController>();
@@ -105,28 +119,28 @@ public class NPC : MonoBehaviour {
                     { mgc.open(); disappear(); }
 
                 }
-            }
 
-            // CHECK FOR CINEMATIC END
-            if (npcDialog.getQuestionBlockEffect() == DBlock.DBLOCK_EFFECTS.NEXT_CINEMATIC_STEP)
-            {
-                Cinematic c = GetComponent<Cinematic>();
-                if (!!c)
+                // CHECK FOR CINEMATIC END
+                if ( (q_effect == DBlock.DBLOCK_EFFECTS.NEXT_CINEMATIC_STEP) || (a_effect == DBlock.DBLOCK_EFFECTS.NEXT_CINEMATIC_STEP) )
                 {
-                    Debug.Log("NEXT CINEMATIC STAGE");
-                    c.currentCinematicStage++;
-                    c.playCinematic();
+                    Cinematic c = GetComponent<Cinematic>();
+                    if (!!c)
+                    {
+                        Debug.Log("NEXT CINEMATIC STAGE");
+                        //c.currentCinematicStage++;
+                        c.playCinematic();
+                    }
                 }
-            }
-        }
+            }//ps && tryPlayer
+        }//! captured player
 
     }//! dialog
 
     public void changeResponse()
     {
-        if (npcDialog!=null)
-            npcDialog.changeResponse();
-        uiDialogController.response = npcDialog.getSelectedAnswer();
+        if (dialogController!=null)
+            dialogController.changeResponse();
+        uiDialogController.response = dialogController.getSelectedAnswer();
     }
 
     public void exitDialog()
@@ -138,11 +152,22 @@ public class NPC : MonoBehaviour {
             uiDialogController.show(false);
         dialogStarted = false;
         if (!!resetDialog)
-            npcDialog.resetDialog();
+            dialogController.resetDialog();
         
     }
 
     void OnTriggerEnter2D(Collider2D other)
+    {
+        PlayerController pc = other.GetComponent<PlayerController>();
+        if (!!pc)
+        {
+            capturedPlayerControlled = pc;
+            inRangeOfPlayer = true;
+            pc.npcInRange = this;
+        }
+    }
+
+    void OnTriggerStay2D(Collider2D other)
     {
         PlayerController pc = other.GetComponent<PlayerController>();
         if (!!pc)

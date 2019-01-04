@@ -11,15 +11,17 @@ public class ABlock : DBlock {
     // CTORS
     public ABlock() : base("")
     {
-
+        successor_dcell_ID = "";
     }
 
     public ABlock(string iMessage) : base(iMessage)
     {
+        successor_dcell_ID = "";
     }
 
     public ABlock(string iMessage, DBLOCK_EFFECTS iBlockEffect) : base(iMessage, iBlockEffect)
     {
+        successor_dcell_ID = "";
     }
 
     public ABlock(string iMessage, string iSuccessorDCellID) : base(iMessage)

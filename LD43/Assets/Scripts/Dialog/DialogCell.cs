@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DialogCell : MonoBehaviour
+public class DialogCell
 {
     private string DCELL_UID;
     public string getID() { return DCELL_UID; }
@@ -14,7 +14,7 @@ public class DialogCell : MonoBehaviour
     private int selectedAnswerIndex;
 
     //CTOR
-    public DialogCell(QBlock iCellDialog)
+    public DialogCell(QBlock iCellDialog) : base()
     {
         question = iCellDialog;
         answers = new List<ABlock>();
@@ -55,13 +55,8 @@ public class DialogCell : MonoBehaviour
         return (answers.Count <= 0) && (defaultSuccessorID.Length <= 0);
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void addAnswer(ABlock iABlock)
     {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        answers.Add(iABlock);
     }
 }

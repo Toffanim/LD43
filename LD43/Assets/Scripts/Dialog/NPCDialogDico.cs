@@ -2,16 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NPCDialogDico : MonoBehaviour {
+public class NPCDialogDico {
 
     public DialogCell startingCell { get; set; }
     public List<DialogCell> loadedCells { get; set; }
-
+    public int dialog_id { get; set; }
 
     //CTOR 
-    public NPCDialogDico()
+    public NPCDialogDico() : base()
     {
         loadedCells = new List<DialogCell>();
+        dialog_id = 0;
+    }
+
+    public NPCDialogDico(int dialogID) : base()
+    {
+        loadedCells = new List<DialogCell>();
+        dialog_id = dialogID;
     }
 
     public void addDialogCell(DialogCell iDCell)
@@ -35,7 +42,7 @@ public class NPCDialogDico : MonoBehaviour {
     {
         DialogCell nextCell = null;
 
-        if (!!iDialogCell)
+        if (iDialogCell!=null)
         {
             ABlock selectedAnswer = iDialogCell.selectedAnswer;
             string defaultSuccessorID = iDialogCell.defaultSuccessorID;
@@ -73,13 +80,4 @@ public class NPCDialogDico : MonoBehaviour {
             }
         }//!foreach dcell
     }
-
-    // UNITY
-    void Start () {
-        loadedCells = new List<DialogCell>();
-    }
-
-	void Update () {
-		
-	}
 }
