@@ -11,15 +11,15 @@ public class NPC : MonoBehaviour {
     public GameObject dialogUI;
     public GameObject relatedCinematic;
 
-    // INTERNAL
+    // PU INTERNAL ATTR
     public DialogController dialogController { get; set; }
-    bool inRangeOfPlayer;
     public bool dialogStarted = false;
+    public PlayerController capturedPlayerControlled { get; set; }
 
-    //PV ATTR
-    private PlayerController capturedPlayerControlled;
+    // PV ATTR
     private UIDialogController uiDialogController;
 
+    // CTOR
     public NPC( int iDialogRootId)
     {
         dialogID = iDialogRootId;
@@ -33,11 +33,10 @@ public class NPC : MonoBehaviour {
 
         dialogStarted = false;
     }
-    // Use this for initialization
+
+    // UNITY START
     void Start()
     {
-        inRangeOfPlayer = false;
-
         gameObject.AddComponent<DialogController>();
         dialogController = GetComponent<DialogController>();
         dialogController.init(dialogID);
@@ -50,7 +49,7 @@ public class NPC : MonoBehaviour {
         }
     }
 
-    // Update is called once per frame
+    // UNITY UPDATE
     void Update () {
     }
 
@@ -63,7 +62,7 @@ public class NPC : MonoBehaviour {
     public void dialog()
     {
         //RESOLVE EFFECT OF THE NEW MESSAGE
-        if (!!capturedPlayerControlled && inRangeOfPlayer)
+        if (!!capturedPlayerControlled)
         {
             bool tryDialog = false;
             if (!dialogStarted)
@@ -120,14 +119,13 @@ public class NPC : MonoBehaviour {
 
                 }
 
-                // CHECK FOR CINEMATIC END
+                // CHECK FOR A NEXT CINEMATIC STEP
                 if ( (q_effect == DBlock.DBLOCK_EFFECTS.NEXT_CINEMATIC_STEP) || (a_effect == DBlock.DBLOCK_EFFECTS.NEXT_CINEMATIC_STEP) )
                 {
                     Cinematic c = GetComponent<Cinematic>();
                     if (!!c)
                     {
                         Debug.Log("NEXT CINEMATIC STAGE");
-                        //c.currentCinematicStage++;
                         c.playCinematic();
                     }
                 }
@@ -162,7 +160,6 @@ public class NPC : MonoBehaviour {
         if (!!pc)
         {
             capturedPlayerControlled = pc;
-            inRangeOfPlayer = true;
             pc.npcInRange = this;
         }
     }
@@ -173,7 +170,6 @@ public class NPC : MonoBehaviour {
         if (!!pc)
         {
             capturedPlayerControlled = pc;
-            inRangeOfPlayer = true;
             pc.npcInRange = this;
         }
     }
@@ -184,7 +180,6 @@ public class NPC : MonoBehaviour {
         if (!!pc)
         {
             capturedPlayerControlled = null;
-            inRangeOfPlayer = false;
             pc.npcInRange = null;
         }
         exitDialog();

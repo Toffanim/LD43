@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class Cinematic : MonoBehaviour {
 
-
+    /**
+     * cinematicStage 0 is launchSequence
+     * thus custom stages in play() override method starts at 1
+     **/
+    
     // REQUIRED ACTORS
     public GameObject princessGO;
     public GameObject cameraGO;

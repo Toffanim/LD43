@@ -26,10 +26,11 @@ public class IntroEventController : Cinematic {
 
             // AUTOTALK TO PRINCESS
             NPC talkative = GetComponent<NPC>();
+            talkative.capturedPlayerControlled = playerGO.GetComponent<PlayerController>();
             if (!!talkative)
                 talkative.dialog();
         }
-        if (currentCinematicStage >= 3)
+        if (currentCinematicStage > 1)
         {
             quitCinematic();
             Destroy(gameObject);

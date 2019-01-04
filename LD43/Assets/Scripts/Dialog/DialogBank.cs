@@ -267,11 +267,40 @@ public class DialogBank {
         NPCDialogDico dico = new NPCDialogDico();
 
         // CREATE CELLS
-        QBlock q0 = new QBlock("Help meeeeeeee!", DBlock.DBLOCK_EFFECTS.NEXT_CINEMATIC_STEP);
+        QBlock q0 = new QBlock("Help meeeeeeee!");
         DialogCell cell0 = new DialogCell(q0);
         dico.addDialogCell(cell0);
 
-        QBlock q1 = new QBlock("Someone please help me !!", DBlock.DBLOCK_EFFECTS.NEXT_CINEMATIC_STEP);
+        QBlock q1 = new QBlock("Someone please help me !!");
+        DialogCell cell1 = new DialogCell(q1);
+        dico.addDialogCell(cell1);
+
+        QBlock q2 = new QBlock("", DBlock.DBLOCK_EFFECTS.NEXT_CINEMATIC_STEP);
+        DialogCell cell2 = new DialogCell(q2);
+        dico.addDialogCell(cell2);
+
+        // UPDATE LINKS
+        cell0.defaultSuccessorID = cell1.getID();
+        cell1.defaultSuccessorID = cell2.getID();
+
+        // SET STARTING CELL
+        dico.setStartingCellFromID(cell0.getID());
+
+        dico.finishDicoCreation();
+
+        return dico;
+    }
+
+    public static NPCDialogDico endgameBad()
+    {
+        NPCDialogDico dico = new NPCDialogDico();
+
+        // CREATE CELLS
+        QBlock q0 = new QBlock("Look at yourself! You're not a hero!");
+        DialogCell cell0 = new DialogCell(q0);
+        dico.addDialogCell(cell0);
+
+        QBlock q1 = new QBlock("You made it.. but at what cost?");
         DialogCell cell1 = new DialogCell(q1);
         dico.addDialogCell(cell1);
 
@@ -286,34 +315,28 @@ public class DialogBank {
         return dico;
     }
 
-    public static NPCDialogDico endgameBad()
-    {
-        /*
-        DBlock retBlock = null;
-
-        Dictionary<string, DBlock> dicoA = new Dictionary<string, DBlock>();
-        dicoA.Add(MONO_DIALOG, new DBlock("Look at yourself! You're not a hero!"));
-
-        retBlock = new DBlock("You made it.. but at what cost?", dicoA);
-
-        return retBlock;
-        */
-        return null;
-    }
-
     public static NPCDialogDico endgameGood()
     {
-        /*
-        DBlock retBlock = null;
+        NPCDialogDico dico = new NPCDialogDico();
 
-        Dictionary<string, DBlock> dicoA = new Dictionary<string, DBlock>();
-        dicoA.Add(MONO_DIALOG, new DBlock("I shall be yours as you prove your valor."));
+        // CREATE CELLS
+        QBlock q0 = new QBlock("I shall be yours as you prove your valor.");
+        DialogCell cell0 = new DialogCell(q0);
+        dico.addDialogCell(cell0);
 
-        retBlock = new DBlock("You're a valourous knight!", dicoA);
+        QBlock q1 = new QBlock("You're a valourous knight!");
+        DialogCell cell1 = new DialogCell(q1);
+        dico.addDialogCell(cell1);
 
-        return retBlock;
-        */
-        return null;
+        // UPDATE LINKS
+        cell0.defaultSuccessorID = cell1.getID();
+
+        // SET STARTING CELL
+        dico.setStartingCellFromID(cell0.getID());
+
+        dico.finishDicoCreation();
+
+        return dico;
     }
 
     public static NPCDialogDico getErrorBlock()
