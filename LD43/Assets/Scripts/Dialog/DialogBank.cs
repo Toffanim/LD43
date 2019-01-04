@@ -49,25 +49,6 @@ public class DialogBank {
 
     public static NPCDialogDico wizard1()
     {
-        /*
-        DBlock retBlock = null;
-        Dictionary<string, DBlock> dicoA = new Dictionary<string, DBlock>();
-        DBlock choiceA = new DBlock("You made the right decision my friend!", "OK, Let's do this !", DBlock.DBLOCK_EFFECTS.LOSE_ARM);
-        DBlock choiceB = new DBlock("As you wish...", "No way I'm doing it.");
-        dicoA.Add(choiceA.rootKey, choiceA);
-        dicoA.Add(choiceB.rootKey, choiceB);
-
-        Dictionary<string, DBlock> dicoB = new Dictionary<string, DBlock>();
-        dicoB.Add(MONO_DIALOG, new DBlock("I can help you pass this weird door but it will cost you an arm.", dicoA));
-
-        Dictionary<string, DBlock> dicoC = new Dictionary<string, DBlock>();
-        dicoC.Add(MONO_DIALOG, new DBlock("Beautiful Princess, heh?", dicoB));
-
-        retBlock = new DBlock("Wizard1 : Good morning sir.", dicoC);
-
-        return retBlock;
-        */
-
         NPCDialogDico dico = new NPCDialogDico();
 
         // CREATE CELLS
@@ -111,94 +92,174 @@ public class DialogBank {
 
     public static NPCDialogDico wizard2()
     {
-        /*
-        DBlock retBlock = null;
-        Dictionary<string, DBlock> dicoA = new Dictionary<string, DBlock>();
-        DBlock choiceA = new DBlock("You made the right decision my friend!", "OK, Let's do this !", DBlock.DBLOCK_EFFECTS.LOSE_LEG);
-        DBlock choiceB = new DBlock("As you wish...", "No way I'm doing it.");
-        dicoA.Add(choiceA.rootKey, choiceA);
-        dicoA.Add(choiceB.rootKey, choiceB);
+        NPCDialogDico dico = new NPCDialogDico();
 
-        Dictionary<string, DBlock> dicoB = new Dictionary<string, DBlock>();
-        dicoB.Add(MONO_DIALOG, new DBlock("I can help you pass this weird door but it will cost you a leg.", dicoA));
+        // CREATE CELLS
+        QBlock q0 = new QBlock("Wizard : Good morning sir.");
+        DialogCell cell0 = new DialogCell(q0);
+        dico.addDialogCell(cell0);
 
-        Dictionary<string, DBlock> dicoC = new Dictionary<string, DBlock>();
-        dicoC.Add(MONO_DIALOG, new DBlock("Beautiful Princess, heh?", dicoB));
+        QBlock q1 = new QBlock("Beautiful Princess, heh?");
+        DialogCell cell1 = new DialogCell(q1);
+        dico.addDialogCell(cell1);
 
-        retBlock = new DBlock("Wizard2 : Good morning sir.", dicoC);
+        QBlock q2 = new QBlock("I can help you pass this weird door but it will cost you a leg.");
+        ABlock a21 = new ABlock("OK, Let's do this !");
+        ABlock a22 = new ABlock("No way I'm doing it.");
+        DialogCell cell2 = new DialogCell(q2);
+        cell2.addAnswer(a21);
+        cell2.addAnswer(a22);
+        dico.addDialogCell(cell2);
 
-        return retBlock;
-        */
-        return null;
+        QBlock q3 = new QBlock("You made the right decision my friend!", DBlock.DBLOCK_EFFECTS.LOSE_LEG);
+        DialogCell cell3 = new DialogCell(q3);
+        dico.addDialogCell(cell3);
+
+        QBlock q4 = new QBlock("As you wish...");
+        DialogCell cell4 = new DialogCell(q4);
+        dico.addDialogCell(cell4);
+
+        // UPDATE LINKS
+        cell0.defaultSuccessorID = cell1.getID();
+        cell1.defaultSuccessorID = cell2.getID();
+        a21.successor_dcell_ID = cell3.getID();
+        a22.successor_dcell_ID = cell4.getID();
+
+        // SET STARTING CELL
+        dico.setStartingCellFromID(cell0.getID());
+
+        dico.finishDicoCreation();
+
+        return dico;
     }
 
     public static NPCDialogDico wizard3()
     {
-        /*
-        DBlock retBlock = null;
-        Dictionary<string, DBlock> dicoA = new Dictionary<string, DBlock>();
-        DBlock choiceA = new DBlock("You made the right decision my friend!", "OK, Let's do this !", DBlock.DBLOCK_EFFECTS.LOSE_LEG);
-        DBlock choiceB = new DBlock("As you wish...", "No way I'm doing it.");
-        dicoA.Add(choiceA.rootKey, choiceA);
-        dicoA.Add(choiceB.rootKey, choiceB);
+        NPCDialogDico dico = new NPCDialogDico();
 
-        Dictionary<string, DBlock> dicoB = new Dictionary<string, DBlock>();
-        dicoB.Add(MONO_DIALOG, new DBlock("I can help you pass this weird door but it will cost you a leg.", dicoA));
+        // CREATE CELLS
+        QBlock q0 = new QBlock("Wizard : Good morning sir.");
+        DialogCell cell0 = new DialogCell(q0);
+        dico.addDialogCell(cell0);
 
-        Dictionary<string, DBlock> dicoC = new Dictionary<string, DBlock>();
-        dicoC.Add(MONO_DIALOG, new DBlock("Beautiful Princess, heh?", dicoB));
+        QBlock q1 = new QBlock("Beautiful Princess, heh?");
+        DialogCell cell1 = new DialogCell(q1);
+        dico.addDialogCell(cell1);
 
-        retBlock = new DBlock("Wizard3 : Good morning sir.", dicoC);
+        QBlock q2 = new QBlock("I can help you pass this weird door but it will cost you a leg.");
+        ABlock a21 = new ABlock("OK, Let's do this !");
+        ABlock a22 = new ABlock("No way I'm doing it.");
+        DialogCell cell2 = new DialogCell(q2);
+        cell2.addAnswer(a21);
+        cell2.addAnswer(a22);
+        dico.addDialogCell(cell2);
 
-        return retBlock;
-        */
-        return null;
+        QBlock q3 = new QBlock("You made the right decision my friend!", DBlock.DBLOCK_EFFECTS.LOSE_LEG);
+        DialogCell cell3 = new DialogCell(q3);
+        dico.addDialogCell(cell3);
+
+        QBlock q4 = new QBlock("As you wish...");
+        DialogCell cell4 = new DialogCell(q4);
+        dico.addDialogCell(cell4);
+
+        // UPDATE LINKS
+        cell0.defaultSuccessorID = cell1.getID();
+        cell1.defaultSuccessorID = cell2.getID();
+        a21.successor_dcell_ID = cell3.getID();
+        a22.successor_dcell_ID = cell4.getID();
+
+        // SET STARTING CELL
+        dico.setStartingCellFromID(cell0.getID());
+
+        dico.finishDicoCreation();
+
+        return dico;
     }
 
     public static NPCDialogDico wizard4()
     {
-        /*
-        DBlock retBlock = null;
-        Dictionary<string, DBlock> dicoA = new Dictionary<string, DBlock>();
-        DBlock choiceA = new DBlock("You made the right decision my friend!", "OK, Let's do this !", DBlock.DBLOCK_EFFECTS.LOSE_ARM);
-        DBlock choiceB = new DBlock("As you wish...", "No way I'm doing it.");
-        dicoA.Add(choiceA.rootKey, choiceA);
-        dicoA.Add(choiceB.rootKey, choiceB);
+        NPCDialogDico dico = new NPCDialogDico();
 
-        Dictionary<string, DBlock> dicoB = new Dictionary<string, DBlock>();
-        dicoB.Add(MONO_DIALOG, new DBlock("I can help you pass this weird door but it will cost you an arm.", dicoA));
+        // CREATE CELLS
+        QBlock q0 = new QBlock("Wizard : Good morning sir.");
+        DialogCell cell0 = new DialogCell(q0);
+        dico.addDialogCell(cell0);
 
-        Dictionary<string, DBlock> dicoC = new Dictionary<string, DBlock>();
-        dicoC.Add(MONO_DIALOG, new DBlock("Beautiful Princess, heh?", dicoB));
+        QBlock q1 = new QBlock("Beautiful Princess, heh?");
+        DialogCell cell1 = new DialogCell(q1);
+        dico.addDialogCell(cell1);
 
-        retBlock = new DBlock("Wizard4 : Good morning sir.", dicoC);
+        QBlock q2 = new QBlock("I can help you pass this weird door but it will cost you an arm.");
+        ABlock a21 = new ABlock("OK, Let's do this !");
+        ABlock a22 = new ABlock("No way I'm doing it.");
+        DialogCell cell2 = new DialogCell(q2);
+        cell2.addAnswer(a21);
+        cell2.addAnswer(a22);
+        dico.addDialogCell(cell2);
 
-        return retBlock;
-        */
-        return null;
+        QBlock q3 = new QBlock("You made the right decision my friend!", DBlock.DBLOCK_EFFECTS.LOSE_ARM);
+        DialogCell cell3 = new DialogCell(q3);
+        dico.addDialogCell(cell3);
+
+        QBlock q4 = new QBlock("As you wish...");
+        DialogCell cell4 = new DialogCell(q4);
+        dico.addDialogCell(cell4);
+
+        // UPDATE LINKS
+        cell0.defaultSuccessorID = cell1.getID();
+        cell1.defaultSuccessorID = cell2.getID();
+        a21.successor_dcell_ID = cell3.getID();
+        a22.successor_dcell_ID = cell4.getID();
+
+        // SET STARTING CELL
+        dico.setStartingCellFromID(cell0.getID());
+
+        dico.finishDicoCreation();
+
+        return dico;
     }
 
     public static NPCDialogDico wizard5()
     {
-        /*
-        DBlock retBlock = null;
-        Dictionary<string, DBlock> dicoA = new Dictionary<string, DBlock>();
-        DBlock choiceA = new DBlock("You made the right decision my friend!", "OK, Let's do this !", DBlock.DBLOCK_EFFECTS.LOSE_BODY);
-        DBlock choiceB = new DBlock("As you wish...", "No way I'm doing it.");
-        dicoA.Add(choiceA.rootKey, choiceA);
-        dicoA.Add(choiceB.rootKey, choiceB);
+        NPCDialogDico dico = new NPCDialogDico();
 
-        Dictionary<string, DBlock> dicoB = new Dictionary<string, DBlock>();
-        dicoB.Add(MONO_DIALOG, new DBlock("I can help you beat this abomination but it will cost your humanity.", dicoA));
+        // CREATE CELLS
+        QBlock q0 = new QBlock("Wizard : Good morning sir.");
+        DialogCell cell0 = new DialogCell(q0);
+        dico.addDialogCell(cell0);
 
-        Dictionary<string, DBlock> dicoC = new Dictionary<string, DBlock>();
-        dicoC.Add(MONO_DIALOG, new DBlock("Beautiful Princess, heh?", dicoB));
+        QBlock q1 = new QBlock("Beautiful Princess, heh?");
+        DialogCell cell1 = new DialogCell(q1);
+        dico.addDialogCell(cell1);
 
-        retBlock = new DBlock("Wizard4 : Good morning sir.", dicoC);
+        QBlock q2 = new QBlock("I can help you beat this abomination but it will cost your humanity.");
+        ABlock a21 = new ABlock("OK, Let's do this !");
+        ABlock a22 = new ABlock("No way I'm doing it.");
+        DialogCell cell2 = new DialogCell(q2);
+        cell2.addAnswer(a21);
+        cell2.addAnswer(a22);
+        dico.addDialogCell(cell2);
 
-        return retBlock;
-        */
-        return null;
+        QBlock q3 = new QBlock("You made the right decision my friend!", DBlock.DBLOCK_EFFECTS.LOSE_BODY);
+        DialogCell cell3 = new DialogCell(q3);
+        dico.addDialogCell(cell3);
+
+        QBlock q4 = new QBlock("As you wish...");
+        DialogCell cell4 = new DialogCell(q4);
+        dico.addDialogCell(cell4);
+
+        // UPDATE LINKS
+        cell0.defaultSuccessorID = cell1.getID();
+        cell1.defaultSuccessorID = cell2.getID();
+        a21.successor_dcell_ID = cell3.getID();
+        a22.successor_dcell_ID = cell4.getID();
+
+        // SET STARTING CELL
+        dico.setStartingCellFromID(cell0.getID());
+
+        dico.finishDicoCreation();
+
+        return dico;
     }
 
     public static NPCDialogDico princess()
