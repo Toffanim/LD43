@@ -8,7 +8,9 @@ public class DialogCell
     public string getID() { return DCELL_UID; }
 
     public string defaultSuccessorID { get; set; }
+
     public QBlock question { get; set; }
+
     public ABlock selectedAnswer { get; set; }
     public List<ABlock> answers { get; set; }
     private int selectedAnswerIndex;
@@ -59,4 +61,6 @@ public class DialogCell
     {
         answers.Add(iABlock);
     }
+
+
 }

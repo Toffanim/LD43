@@ -20,15 +20,15 @@ public class IntroEventController : Cinematic {
     public override void play()
     {
         // [..]
-        if (currentCinematicStage == 1)
+        if (currentCinematicStage == 0)
         {
             moveCameraToPrincess();
 
             // AUTOTALK TO PRINCESS
-            NPC talkative = GetComponent<NPC>();
+            DialogNPC talkative = GetComponent<DialogNPC>();
             talkative.capturedPlayerControlled = playerGO.GetComponent<PlayerController>();
             if (!!talkative)
-                talkative.dialog();
+                talkative.interactWithType(NPCTypeNames.dialog);
         }
         if (currentCinematicStage > 1)
         {

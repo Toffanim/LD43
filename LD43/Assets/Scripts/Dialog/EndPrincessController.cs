@@ -21,7 +21,7 @@ public class EndPrincessController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         PlayerState ps = other.GetComponent<PlayerState>();
-        NPC npc = gameObject.GetComponent<NPC>();
+        DialogNT npc = gameObject.GetComponent<DialogNT>();
         if (!!ps && !!npc)
             npc.loadNewDialog( (ps.State != State.CHAIR_BALL) ? 
                 8 /* GOOD ENDING :) */ : 

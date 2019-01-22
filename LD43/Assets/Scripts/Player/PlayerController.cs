@@ -65,12 +65,22 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         if (Input.GetKey("escape")) Application.Quit();
+
         if (npcInRange!=null)
         {
+            /*
             if (Input.GetButtonDown("Jump") && npcInRange.dialogStarted )
                 npcInRange.changeResponse();
             if (Input.GetButtonDown("Talk"))
                 npcInRange.dialog();
+                */
+            if (Input.GetButtonDown("Talk"))
+                npcInRange.interactWithType(NPCTypeNames.dialog);
+            PlayerState ps = GetComponent<PlayerState>();
+            if (!!ps) {
+                if (Input.GetButtonDown("Attack") && !!ps.IsTalking)
+                    npcInRange.interactWithType2(NPCTypeNames.dialog);
+            }
         }
 
 

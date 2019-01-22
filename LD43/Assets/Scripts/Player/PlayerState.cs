@@ -44,6 +44,7 @@ public class PlayerState : MonoBehaviour {
 
     public bool CanAttack = true;
     public bool IsDamaged;
+    public bool IsTalking = false;
 
     // PV STATS
     private int n_arms = 2;
